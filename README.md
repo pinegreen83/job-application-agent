@@ -37,7 +37,7 @@ Tauri 선택은 OS WebView 재사용과 Rust 학습이라는 결정이다. 더 �
 ## 현 상태와 개발 시작
 이 저장소에는 명세와 M0-A 개발용 실행 기반이 있다. 완성된 앱이나 CI 파이프라인은 아니다. 후속 개발도 `CODEX_START.md`와 승인된 기능별 명세를 먼저 확인한다.
 
-M0-A에서는 키 없이 실행하는 합성 기본 화면과 Tauri 실행부를 추가한다. 개발 명령과 OS별 준비·검증 한계는 [개발 실행 문서](docs/DEVELOPMENT.md)를 따른다. 빠른 브라우저 확인은 `npm ci` → `npm run dev`이며, 실제 Tauri 실행에는 Rust와 OS별 빌드 도구가 필요하다. Windows/macOS 네이티브 검증과 M0 Gate는 아직 완료되지 않았다.
+M0-A에서는 키 없이 실행하는 합성 기본 화면과 Tauri 실행부를 추가한다. 개발 명령과 OS별 준비·검증 한계는 [개발 실행 문서](docs/DEVELOPMENT.md)를 따른다. 빠른 브라우저 확인은 `npm ci` → `npm run dev`이며, 실제 Tauri 실행에는 Rust와 OS별 빌드 도구가 필요하다. Windows/macOS 실기기에서 M0-A 기본 창·종료·재실행을 확인했다. 검증 근거는 [검증 기록](docs/verification/M0_A_RESULTS.md)을 참조한다. 개발 의존성 잔여 위험 판단과 M0 전체 Gate는 남아 있다.
 
 프로필과 메일 샘플은 퍼블릭 저장소에 넣지 말고 개인정보가 제거된 합성 Fixtures만 사용한다. 초기 대상 OS/배포 조건은 `docs/MILESTONES.md` 및 `specs/006-ci-release/spec.md`를 따른다.
 

@@ -67,10 +67,16 @@ CI workflow의 실제 최신 결과·head commit·run URL은 PR #4와 Issue #3�
 
 Windows/macOS CI도 [run #44284271888](https://github.com/pinegreen83/job-application-agent/actions/runs/44284271888)에서 Node 24.22.3/Rust 1.100.0의 fmt/check/clippy/test 명령·Chromium 각 2건·Tauri debug 비번들 build·lockfile 무변경 검사를 통과했다. Rust 최소 실행부의 별도 Rust 테스트 사례는 0개이며 해당 명령 성공을 기능 AC assertion으로 보고하지 않는다.
 
+## macOS 실기기 창 실행 — 사용자 확인 완료
+
+2026-11-18 commit `71df964394f0a1d7a43ce7a5b884cac090d044a4`를 Apple Silicon/macOS 15.8.1, Xcode 16.2, Node 24.22.3/npm 11.19.1, Rust/Cargo 1.100.0으로 검증했다. `npm ci`, `npm run build`(타입·설정 검사 포함), Rust fmt 검사를 통과했고 `npm run tauri dev -- -- --locked`로 native build와 두 차례 실행에 성공했다.
+
+사용자가 첫 창을 직접 닫았고, 재실행한 창에서 합성 공고·식별자·미분석 상태·미구현 안내가 모두 정상 표시되며 표시 오류가 없다고 확인한 뒤 다시 닫았다. 두 실행 모두 CLI exit 0을 관찰했다. 화면 증거는 사용자 확인이며 Computer Use 직접 관찰은 아니다. 소스·lockfile 변경 없이 검증했다. 상세 환경·명령과 미실행 검사는 [Mac 실기기 기록](M0_A_MACOS_SMOKE.md#2026-11-18-실기기-결과--사용자-확인-완료)을 참조한다.
+
 ## 남은 작업과 AC 판정
 
-**Windows 기본 창 실행 확인 완료 / macOS 실기기 확인 대기 / M0 Gate 미통과.** npm·Cargo lockfile과 양쪽 OS의 CI 검증, Windows native 기본 창·종료/재실행을 확인했다. [Mac 실행 절차](M0_A_MACOS_SMOKE.md)에 따른 실기기 결과와 사용자 리뷰까지 남겨 두고 PR의 Draft를 유지한다. 최초 통합 릴리스나 M0 전체 완료를 의미하지 않는다.
+**Windows/macOS 기본 창·종료·재실행 확인 완료 / M0 Gate 미통과.** npm·Cargo lockfile과 양쪽 OS의 기존 CI 검증 및 실기기 기본 창 실행을 확인했다. 개발 의존성 잔여 위험 판단과 사용자 리뷰가 남아 있어 PR의 Draft를 유지한다. 최초 통합 릴리스나 M0 전체 완료를 의미하지 않는다.
 
-이전 Windows 정책 차단 이후 후속 환경에서 실기기 실행에 성공했다. 현재 남은 OS 실행 항목은 Mac 실기기 창 확인이다. 개발 의존성 취약점의 수정판 확인·갱신 또는 잔여 위험에 대한 사용자 판단도 남아 있다.
+이전 Windows 정책 차단 이후 후속 환경에서 실기기 실행에 성공했다. Mac도 사용자 확인으로 기본 창·종료·재실행을 검증했다. 개발 의존성 취약점의 수정판 확인·갱신 또는 잔여 위험에 대한 사용자 판단이 남아 있다. IPC·저장·Mock 및 M0 전체 Gate 검증은 별도다.
 
 최초 PR 제출 시 CI는 미포함이었다. 후속 명시적 승인으로 네이티브 검사 workflow를 추가했으며, M0-E 전체·Release/설치본 게시와 사용자 merge는 별도 절차를 따른다.

@@ -23,7 +23,7 @@
 
 - [Tauri macOS prerequisites](https://v2.tauri.app/start/prerequisites/#macos): Xcode Command Line Tools (`xcode-select --install`)와 Rust stable을 준비한다.
 - Node/npm 설치 후 루트에서 같은 명령을 사용한다. WKWebView는 OS가 제공한다.
-- macOS ARM64 CI의 정적 검사·native build는 통과했지만 **실제 Mac의 창 실행은 미검증**이다. 최초 지원 CPU/최소 OS/서명·공증은 아직 제품 결정이 아니다. 현 개발기 아키텍처의 실행과 최초 배포 대상 결정을 구분한다. 실기기 확인은 [Mac 실행 절차](verification/M0_A_MACOS_SMOKE.md)를 따른다.
+- macOS ARM64 CI의 정적 검사·native build를 통과했고 **Apple Silicon/macOS 15.8.1 실기기의 기본 창·종료·재실행도 사용자 확인으로 검증했다**. Node 24.22.3/npm 11.19.1, Rust/Cargo 1.100.0, Xcode 16.2를 사용했다. 최초 지원 CPU/최소 OS/서명·공증은 아직 제품 결정이 아니다. 현 개발기 아키텍처의 실행과 최초 배포 대상 결정을 구분한다. 실행 절차·사용자 확인 근거·미검증 범위는 [Mac 실기기 기록](verification/M0_A_MACOS_SMOKE.md)을 참조한다.
 
 ## 명령
 
