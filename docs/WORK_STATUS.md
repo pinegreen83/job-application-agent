@@ -10,7 +10,7 @@
 
 - PR #2는 사용자가 계획·M0 AC 승인 체크 후 직접 merge했다. main의 준비 완료 기준 commit은 `1a1b0c9`다.
 - [M0-A Issue #3](https://github.com/pinegreen83/job-application-agent/issues/3) / [Draft PR #4](https://github.com/pinegreen83/job-application-agent/pull/4): 합성 화면·Tauri 실행부·npm lockfile·개발 문서. frontend check/build, Edge 스모크 2건 통과. 구현 commit `b7fa17c`.
-- [Issue #5](https://github.com/pinegreen83/job-application-agent/issues/5): 사용자 추가 요청에 따라 다른 기기의 checkout/setup/진단/작업 handoff를 구성. PR은 #4 브랜치를 base로 하는 별도 stacked PR이다. PR #4와 이 작업 모두 사용자 merge 대기다.
+- [Issue #5](https://github.com/pinegreen83/job-application-agent/issues/5) / [Draft PR #6](https://github.com/pinegreen83/job-application-agent/pull/6): 사용자 추가 요청에 따라 다른 기기의 checkout/setup/진단/작업 handoff를 구성. #4 브랜치를 base로 하는 별도 stacked PR이다. PR #4와 #6 모두 사용자 merge 대기다.
 
 ## 우선 남은 검증
 
