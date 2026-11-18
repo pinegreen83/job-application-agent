@@ -6,7 +6,7 @@ GitHub의 코드·명세·작업 문서로 개발을 이어간다. 실제 메일
 
 ## 현재 코드 받기
 
-현재 M0-A 구현은 [Draft PR #4](https://github.com/pinegreen83/job-application-agent/pull/4)의 `feat/3-m0-a-foundation`에 있고, 다른 기기 설정은 그 위의 `feat/5-cross-device-setup`에 있다. 두 PR이 main에 통합되기 전에는 **아래 브랜치**를 checkout해야 실행 코드와 이 설정을 모두 받는다.
+현재 M0-A 구현은 [PR #4](https://github.com/pinegreen83/job-application-agent/pull/4)의 `feat/3-m0-a-foundation`에 있고, 다른 기기 설정은 그 위의 `feat/5-cross-device-setup`에 있다. 두 PR이 main에 통합되기 전에는 **아래 브랜치**를 checkout해야 실행 코드와 이 설정을 모두 받는다.
 
 Windows PowerShell과 macOS 터미널에서 같은 명령을 사용한다. 원하는 작업 폴더에서 시작한다.
 
@@ -52,7 +52,7 @@ npm run doctor -- --native
 npm run tauri dev
 ```
 
-`--native`는 Rust/Cargo 명령 및 host OS를 추가 필수 검사한다. 성공해도 SDK/WebView/OS 정책이나 앱 실행 성공을 보증하지 않는다. 현재 PC는 Rust/MSVC 부족과 Tauri CLI 모듈의 앱 제어 차단이 있고, Cargo.lock 생성·native compile·Windows 창 및 macOS 실기기 검증이 미완료다. 보안 정책을 우회하지 말고 허용되는 개발 환경에서 검증한다. 최초 지원 CPU/최소 OS/서명은 별도 결정한다.
+`--native`는 Rust/Cargo 명령 및 host OS를 추가 필수 검사한다. 성공해도 SDK/WebView/OS 정책이나 앱 실행 성공을 보증하지 않는다. M0-A는 Cargo.lock과 양쪽 OS CI, Windows native 창 및 Mac 사용자 확인을 마쳤다. 각 기기의 도구/권한 상태는 별도이므로 [실행 결과](verification/M0_A_RESULTS.md)를 참고해 해당 기기에서도 확인한다. 보안 정책을 우회하지 말고 허용되는 개발 환경에서 검증한다. 최초 지원 CPU/최소 OS/서명은 별도 결정한다.
 
 ## 기기를 바꿀 때의 작업 순서
 
@@ -90,4 +90,4 @@ GitHub Public clone은 로그인 없이 가능하지만 push/Issue/PR 작업은 
 
 ## 검증 범위
 
-Windows의 공백 경로에 격리된 fresh checkout과 공통 Node로 setup/build 및 Chromium·Edge 각 2건을 검증했다. [검증 결과](verification/CROSS_DEVICE_RESULTS.md)를 참조한다. 실제 두 번째 PC와 macOS에서의 설치는 아직 미검증이다. 개발 의존성 high 5건, native/Cargo.lock 미검증 및 M0 Gate 미통과는 [M0-A 결과](verification/M0_A_RESULTS.md)의 제한을 유지한다.
+Windows의 공백 경로에 격리된 fresh checkout과 공통 Node로 setup/build 및 Chromium·Edge 각 2건을 검증했다. [검증 결과](verification/CROSS_DEVICE_RESULTS.md)를 참조한다. 공통 setup 자체의 Mac 검증은 별도이며 M0-A Mac native 실행은 사용자 확인을 기록했다. 개발 의존성 high 영향 패키지 5건과 M0 전체 Gate 미통과는 [M0-A 결과](verification/M0_A_RESULTS.md)의 제한을 유지한다.
