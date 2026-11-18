@@ -4,6 +4,7 @@
 - 저장소: [pinegreen83/job-application-agent](https://github.com/pinegreen83/job-application-agent)
 - 현재 이어갈 브랜치: `feat/5-cross-device-setup`
 - 설치/동기화 절차: [NEW_MACHINE.md](NEW_MACHINE.md)
+- 새 checkout 검증: [CROSS_DEVICE_RESULTS.md](verification/CROSS_DEVICE_RESULTS.md) — Node 24.22.3 setup/build, Chromium 2건·Edge 2건 통과. 실제 다른 기기/macOS는 미검증.
 
 ## 확정·완료된 준비
 

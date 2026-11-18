@@ -1,5 +1,9 @@
 # 변경 기록
 
+## 다른 기기 개발 설정 — 2026-11-18 (리뷰 전)
+- Issue #5: Node 버전 파일, 공통 doctor/setup, 기본 Chromium 스모크와 별도 Edge 명령, checkout·기기 전환·진행 상태 문서 추가.
+- Windows fresh clone의 공통 Node 24.22.3에서 setup/build 및 Chromium·Edge 각 2건 통과. 실제 다른 PC/macOS와 기존 native 제한은 미검증 유지.
+
 ## M0-A 개발 기반 — 2026-11-18 (리뷰 전)
 - Issue #3: Tauri 2/Rust 최소 실행부, React/TypeScript/Vite 합성 화면, npm lockfile·설정 검사·브라우저 통합 스모크 추가.
 - 개발 실행 절차와 OS별 검증 기록 추가. frontend 빌드와 스모크 2건 통과.

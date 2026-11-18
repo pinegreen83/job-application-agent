@@ -90,4 +90,4 @@ GitHub Public clone은 로그인 없이 가능하지만 push/Issue/PR 작업은 
 
 ## 검증 범위
 
-Windows의 격리된 fresh checkout과 공통 Node로 setup/build/브라우저 테스트를 검증해 결과를 Issue/PR에 기록한다. 실제 두 번째 PC와 macOS에서의 설치는 아직 미검증이다. 개발 의존성 high 5건, native/Cargo.lock 미검증 및 M0 Gate 미통과는 [M0-A 결과](verification/M0_A_RESULTS.md)의 제한을 유지한다.
+Windows의 공백 경로에 격리된 fresh checkout과 공통 Node로 setup/build 및 Chromium·Edge 각 2건을 검증했다. [검증 결과](verification/CROSS_DEVICE_RESULTS.md)를 참조한다. 실제 두 번째 PC와 macOS에서의 설치는 아직 미검증이다. 개발 의존성 high 5건, native/Cargo.lock 미검증 및 M0 Gate 미통과는 [M0-A 결과](verification/M0_A_RESULTS.md)의 제한을 유지한다.
