@@ -17,7 +17,7 @@
 - [Tauri Windows prerequisites](https://v2.tauri.app/start/prerequisites/#windows): Visual Studio Build Tools의 **Desktop development with C++**, 해당 Windows SDK, Microsoft Edge WebView2 Runtime이 필요하다.
 - [Rust 설치](https://www.rust-lang.org/tools/install): MSVC용 stable toolchain을 준비하고 새 터미널에서 `rustc --version`, `cargo --version`을 확인한다. 도구 설치는 개발자 환경을 변경하므로 직접 검토해 설치한다.
 - WebView2가 있어도 Rust나 C++ toolchain을 대체하지 않는다.
-- 이 PC는 WebView2만 확인됐다. Rust/Cargo와 VS Build Tools가 없고, 설치된 Tauri CLI의 네이티브 모듈은 Windows Application Control 정책에 차단됐다. 따라서 네이티브 compile·창 실행을 검증하지 못했다. OS 보안 정책을 해제하거나 우회하지 않았다.
+- 추가 검증에서 이 PC에 Rust/Cargo 1.100.0, VS Build Tools 17.14.45와 Windows SDK를 설치했다. Tauri CLI는 재진단에서 실행됐지만 `cargo-fmt` 및 Rust 의존성 build script 실행이 Windows Application Control에 차단됐다(`os error 4551`). 로컬 native compile·창 실행은 여전히 미검증이다. OS 보안 정책을 해제하거나 우회하지 않았다.
 
 ## macOS
 
@@ -35,7 +35,8 @@
 | 타입·설정 검사 | `npm run check` | TypeScript, CLI 패키지의 JSON schema 구조·패턴(URI format 제외), 아이콘 경로 검사 |
 | 브라우저 개발 | `npm run dev` | `http://127.0.0.1:1420`에서 합성 화면, Ctrl+C로 종료 |
 | frontend build | `npm run build` | `dist/` 생성. 데스크톱 설치본 아님 |
-| 브라우저 스모크 | `npm test` | 로컬 Microsoft Edge 필요. 테스트가 서버를 시작·종료, 1420 포트가 비어 있어야 함 |
+| 기본 브라우저 준비·스모크 | `npx playwright install chromium` 후 `npm test` | 고정 Playwright Chromium 사용, 1420 포트가 비어 있어야 함 |
+| 기존 Edge 스모크 | `npm run test:edge` | 로컬 Microsoft Edge 사용 |
 | 네이티브 개발 | `npm run tauri dev` | OS toolchain 필요. Vite와 Tauri 기본 창 실행 |
 | 네이티브 비번들 빌드 | `npm run tauri build -- --no-bundle` | 컴파일 확인용, 설치 파일/Release 게시 없음 |
 | Rust 형식 | `cargo fmt --manifest-path src-tauri/Cargo.toml -- --check` | Rust 도구 필요 |
@@ -43,9 +44,15 @@
 | Rust 정적 검사 | `cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings` | OS toolchain 필요 |
 | Rust 테스트 | `cargo test --manifest-path src-tauri/Cargo.toml` | 이번 최소 실행부에는 별도 Rust 테스트 사례 없음. 앱 실행 증거의 대체 아님 |
 
-브라우저 스모크는 개발 서버에서 desktop/narrow viewport를 확인한다. 외부 HTTP 요청을 차단·기록하고 합성 표시, 미분석 상태, 콘솔 오류와 수평 overflow를 검사한다. 스크린샷은 제외 경로 `test-results/`에 남긴다. 이는 WebView2/WKWebView 네이티브 창 검증이 아니다. Edge가 없는 테스트 환경은 Edge 설치 또는 후속 테스트 러너 검토가 필요하다.
+브라우저 스모크는 개발 서버에서 desktop/narrow viewport를 확인한다. 외부 HTTP 요청을 차단·기록하고 합성 표시, 미분석 상태, 콘솔 오류와 수평 overflow를 검사한다. 스크린샷은 제외 경로 `test-results/`에 남긴다. 이는 WebView2/WKWebView 네이티브 창 검증이 아니다. CI와 기본 테스트는 고정 Chromium을 사용하고 기존 Edge 테스트도 별도 명령으로 유지한다.
 
-Rust 의존성은 Tauri major 2의 허용 범위만 선언했다. 이 환경에 Cargo가 없어 **Cargo.lock을 생성·검증하지 못했다**. 네이티브 도구가 준비되면 Cargo 명령으로 lockfile을 생성해 commit하고 동일 결과를 재검증해야 한다. 그 전에는 네이티브 의존성 재현과 AC-M0-01 전체 통과를 주장하지 않는다.
+`src-tauri/Cargo.lock`을 Cargo 1.100.0으로 생성했고 Tauri 2.12.6을 포함해 Rust 의존성을 고정했다. 검증 시 Cargo 명령에 `--locked`를 사용한다. lock 생성은 native compile 성공 증거가 아니다.
+
+## PR 네이티브 CI
+
+사용자가 추가 승인한 `.github/workflows/m0-a-native.yml`은 main 대상 PR에서 Windows/macOS 검증용 러너로 Node 24.22.3과 Rust 1.100.0을 준비한다. npm lock 설치, TS/설정/build, Chromium 스모크, Rust fmt/check/clippy/test, Tauri debug 비번들 build 및 lockfile 무변경을 검사한다. Action은 commit SHA로 고정하며 읽기 권한만 사용하고 인증정보·개인 자료·설치본·Release를 게시하지 않는다.
+
+러너는 검증 환경이며 최초 지원 CPU/최소 OS/서명 결정이 아니다. CI 컴파일과 실제 기기에서의 기본 창·IPC·저장 스모크를 구분한다. 이 검사는 M0-E의 전체 기밀 스캐너/배포 CI나 M0-F의 OS별 Gate를 완료한 것이 아니다. 최신 run·commit·실패 및 결과는 PR #4에서 확인한다.
 
 ## 네이티브 스모크 기록 방법
 
@@ -62,6 +69,6 @@ Rust 의존성은 Tauri major 2의 허용 범위만 선언했다. 이 환경에 
 
 ## 알려진 의존성 문제
 
-2026-11-18 `npm audit` 결과 high 5건: picomatch의 ReDoS([GHSA-fc5q-39xc-vjpf](https://github.com/advisories/GHSA-fc5q-39xc-vjpf))가 Vite/tinyglobby/fdir/plugin-react 의존 경로에 전파된다. 설치 시점 최신 picomatch 4.0.7도 영향 범위이며 수정판을 확인하지 못했다. 자동 제안의 과거 Vite major로 강제 변경하거나 검사 결과를 숨기지 않았다.
+2026-11-18 `npm audit` 결과 high 영향 패키지 5건: picomatch의 ReDoS([GHSA-fc5q-39xc-vjpf](https://github.com/advisories/GHSA-fc5q-39xc-vjpf))가 Vite/tinyglobby/fdir/plugin-react 의존 경로에 전파된다. 최신 picomatch 4.0.7도 영향 범위이며 수정판을 확인하지 못했다. 자동 제안 버전도 격리 검증했으나 다른 Vite 취약점이 검출돼 적용하지 않았다. [상세 검토](verification/M0_A_DEPENDENCY_REVIEW.md)를 참조한다.
 
 현재 앱 runtime 의존성은 React/React DOM이며 이 문제는 개발 도구 경로다. 개발 서버 loopback 제한은 노출을 줄일 뿐 취약점 해결을 뜻하지 않는다. `npm audit --omit=dev`와 전체 audit을 구분해 기록하고, 수정판이 나오면 별도 검증 후 갱신한다. 미해결 상태는 리뷰/Gate 검토 대상으로 남긴다.

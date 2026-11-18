@@ -14,6 +14,7 @@
     "build": "npm run check && vite build",
     "preview": "vite preview --host 127.0.0.1 --port 1420 --strictPort",
     "test": "playwright test",
+    "test:edge": "playwright test --config=playwright.edge.config.ts",
     "tauri": "tauri"
   },
   "dependencies": {
