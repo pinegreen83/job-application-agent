@@ -41,6 +41,10 @@
 
 이 표는 전체 FR/AC 매핑 완료를 의미하지 않는다. 각 Issue 착수 시 그 범위의 FR마다 검증 AC/테스트를 연결하고, 미정 기대 결과는 먼저 확정한다. 전체 프로토타입 범위는 확정됐지만 상세 Spec과 새 AC는 검토 상태를 유지한다.
 
+## M0 준비 추적
+
+[준비 Issue #1](https://github.com/pinegreen83/job-application-agent/issues/1) → [M0 계획](../plans/M0_PLAN.md): NFR-001/003/004/006/011, DEV-001~008, FR-004-01/02/07, FR-006-01/02/04/06, SPEC-011과 AC-M0-01~06의 작업·검증 경계를 연결한다. 구현 테스트 및 OS 검증은 아직 미실행이며 상세 AC는 검토 대기다. 리뷰 PR과 준비 검증 결과는 Issue의 연결 PR에서 확인한다.
+
 ## 이전 v0.1에서 의도적으로 변경한 내용
 1. **핵심 우선순위:** RAG 작성 자동화 → 대량 공고의 중복 관리와 개인화 적합성 평가.
 2. **기술:** Electron/TypeScript/Windows-first → Tauri 2/Rust/React+TS/SQLite, Windows+macOS 동등 지원.
