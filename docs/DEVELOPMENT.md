@@ -17,13 +17,13 @@
 - [Tauri Windows prerequisites](https://v2.tauri.app/start/prerequisites/#windows): Visual Studio Build Tools의 **Desktop development with C++**, 해당 Windows SDK, Microsoft Edge WebView2 Runtime이 필요하다.
 - [Rust 설치](https://www.rust-lang.org/tools/install): MSVC용 stable toolchain을 준비하고 새 터미널에서 `rustc --version`, `cargo --version`을 확인한다. 도구 설치는 개발자 환경을 변경하므로 직접 검토해 설치한다.
 - WebView2가 있어도 Rust나 C++ toolchain을 대체하지 않는다.
-- 추가 검증에서 이 PC에 Rust/Cargo 1.100.0, VS Build Tools 17.14.45와 Windows SDK를 설치했다. Tauri CLI는 재진단에서 실행됐지만 `cargo-fmt` 및 Rust 의존성 build script 실행이 Windows Application Control에 차단됐다(`os error 4551`). 로컬 native compile·창 실행은 여전히 미검증이다. OS 보안 정책을 해제하거나 우회하지 않았다.
+- Rust/Cargo 1.100.0, VS Build Tools 17.14.45와 Windows SDK 설치 후 초기에는 앱 제어 정책에 차단됐다(`os error 4551`). 후속 실행을 허용하는 개발 환경에서 `npm run tauri dev`의 로컬 native compile, 기본 창·합성 화면, 종료 후 재실행을 확인했다. [Windows 실행 기록](verification/M0_A_RESULTS.md)을 참조한다.
 
 ## macOS
 
 - [Tauri macOS prerequisites](https://v2.tauri.app/start/prerequisites/#macos): Xcode Command Line Tools (`xcode-select --install`)와 Rust stable을 준비한다.
 - Node/npm 설치 후 루트에서 같은 명령을 사용한다. WKWebView는 OS가 제공한다.
-- 이번 작업에서 macOS는 빌드·실행 모두 미검증이다. 최초 지원 CPU/최소 OS/서명·공증은 아직 제품 결정이 아니다. 현 개발기 아키텍처의 실행과 최초 배포 대상 결정을 구분한다.
+- macOS ARM64 CI의 정적 검사·native build는 통과했지만 **실제 Mac의 창 실행은 미검증**이다. 최초 지원 CPU/최소 OS/서명·공증은 아직 제품 결정이 아니다. 현 개발기 아키텍처의 실행과 최초 배포 대상 결정을 구분한다. 실기기 확인은 [Mac 실행 절차](verification/M0_A_MACOS_SMOKE.md)를 따른다.
 
 ## 명령
 

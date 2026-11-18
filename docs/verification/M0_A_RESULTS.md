@@ -49,10 +49,28 @@ SQLite 라이브러리·schema, Provider 연결, 메일/JD 추출, 제품 정렬
 
 CI workflow의 실제 최신 결과·head commit·run URL은 PR #4와 Issue #3에 기록한다. CI의 native build와 실제 Windows/macOS 기기에서의 창 실행은 분리한다.
 
+## Windows 실기기 창 실행 — 확인 완료
+
+검증 코드 commit: `b85edc57d75358a999a6edcdf755414fd0c31e93`. 앱 기능 소스를 변경하지 않고 실행했다. 위 정책 차단은 이전 시도의 이력이며, 아래는 후속 실행이 허용되는 환경에서의 결과다.
+
+| 항목 | 행동·증거 | 결과 |
+|---|---|---|
+| 로컬 native build / 첫 실행 | Windows x64에서 `npm run tauri dev`; Cargo dev build 완료 후 `target/debug/job-application-agent.exe` 실행 | 성공 |
+| 종료 | 첫 창을 사용자가 직접 닫았다고 확인; CLI exit 0, 프로세스 종료 확인 | 정상 종료 |
+| 재실행 | 같은 명령으로 재실행; native executable 소유의 창을 Computer Use 앱 목록에서 식별 | 성공 |
+| 창 제목 | `Job Application Agent · M0-A` | 일치 |
+| 합성 화면 | 실제 native 창을 활성화한 스크린샷과 접근성 트리 확인 | 가상 스튜디오 A / 게임 클라이언트 개발자 / 합성 데이터 / `synthetic-m0-a-001` / 분석하지 않음 표시 |
+| 미구현 안내 | native WebView 접근성 문서·화면 확인 | 저장·AI 등 후속 기능 미연결 안내 정상 표시 |
+| 소스·lockfile | 실행 전후 npm/Cargo lockfile과 앱 기능 소스 변경 없음 | 실행 검증에 새 기능 코드 추가 없음 |
+
+보이는 창은 브라우저 탭이 아닌 Windows native Tauri 창이며 개발 모드 WebView2에서 loopback Vite 콘텐츠를 표시한다. 설치본/production bundle 실행, IPC·SQLite·Provider 동작을 검증한 것은 아니다. 실기기 Mac 실행도 이 결과로 대체하지 않는다. 환경에 실제 사용자 자료나 모델 키를 입력하지 않았다.
+
+Windows/macOS CI도 [run #44284271888](https://github.com/pinegreen83/job-application-agent/actions/runs/44284271888)에서 Node 24.22.3/Rust 1.100.0의 fmt/check/clippy/test 명령·Chromium 각 2건·Tauri debug 비번들 build·lockfile 무변경 검사를 통과했다. Rust 최소 실행부의 별도 Rust 테스트 사례는 0개이며 해당 명령 성공을 기능 AC assertion으로 보고하지 않는다.
+
 ## 남은 작업과 AC 판정
 
-**AC-M0-01 전체 미충족 / M0 Gate 미통과.** 브라우저 실행·frontend build는 검증했지만 네이티브 창과 양쪽 OS의 재현 증거가 없다. Rust lockfile과 compiler 검증 없이 native 재현성을 주장하지 않는다. PR은 이 제한을 명시한 Draft로 제출한다.
+**Windows 기본 창 실행 확인 완료 / macOS 실기기 확인 대기 / M0 Gate 미통과.** npm·Cargo lockfile과 양쪽 OS의 CI 검증, Windows native 기본 창·종료/재실행을 확인했다. [Mac 실행 절차](M0_A_MACOS_SMOKE.md)에 따른 실기기 결과와 사용자 리뷰까지 남겨 두고 PR의 Draft를 유지한다. 최초 통합 릴리스나 M0 전체 완료를 의미하지 않는다.
 
-Cargo.lock 생성과 도구 설치는 후속 작업에서 완료했지만 현재 Windows 정책은 native build script를 차단한다. CI 검증 결과 확인과 실제 OS 기본 창 실행 증거가 필요하다. macOS 실기기도 별도 검증한다. 개발 의존성 취약점의 수정판 확인·갱신 및 사용자 리뷰가 남아 있다.
+이전 Windows 정책 차단 이후 후속 환경에서 실기기 실행에 성공했다. 현재 남은 OS 실행 항목은 Mac 실기기 창 확인이다. 개발 의존성 취약점의 수정판 확인·갱신 또는 잔여 위험에 대한 사용자 판단도 남아 있다.
 
 최초 PR 제출 시 CI는 미포함이었다. 후속 명시적 승인으로 네이티브 검사 workflow를 추가했으며, M0-E 전체·Release/설치본 게시와 사용자 merge는 별도 절차를 따른다.
