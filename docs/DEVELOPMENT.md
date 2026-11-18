@@ -6,6 +6,8 @@
 
 ## 공통 준비
 
+다른 기기에서 처음 받을 때는 [NEW_MACHINE.md](NEW_MACHINE.md)를 따른다. 공통 권장 Node 버전은 `.node-version`/`.nvmrc`에 기록하며 `npm run doctor`, `npm run setup`으로 환경 점검·의존성 설치·frontend build를 수행할 수 있다.
+
 1. 저장소를 checkout한다. Node.js 22.12 이상과 npm 10 이상을 준비한다. 새 환경에는 지원 중인 Node LTS 사용을 권장한다. 이번 Windows frontend 검증에는 기존 Node 25.7.0/npm 11.10.1을 사용했다.
 2. 프로젝트 루트에서 `npm ci`를 실행한다. npm 의존성은 정확한 직접 버전 및 `package-lock.json`으로 고정한다. 설치에는 npm registry 네트워크 접근이 필요하다.
 3. 네이티브 개발에는 아래 OS별 도구를 추가한다. Rust/Cargo 의존성 최초 다운로드도 네트워크가 필요하다. 앱의 외부 서비스 호출과 개발 도구 다운로드는 구분한다.
@@ -35,7 +37,8 @@
 | 타입·설정 검사 | `npm run check` | TypeScript, CLI 패키지의 JSON schema 구조·패턴(URI format 제외), 아이콘 경로 검사 |
 | 브라우저 개발 | `npm run dev` | `http://127.0.0.1:1420`에서 합성 화면, Ctrl+C로 종료 |
 | frontend build | `npm run build` | `dist/` 생성. 데스크톱 설치본 아님 |
-| 브라우저 스모크 | `npm test` | 로컬 Microsoft Edge 필요. 테스트가 서버를 시작·종료, 1420 포트가 비어 있어야 함 |
+| 브라우저 스모크 | `npm test` | 먼저 `npm run setup -- --tests`로 고정 Playwright Chromium 준비. 1420 포트가 비어 있어야 함 |
+| 기존 Edge 스모크 | `npm run test:edge` | 로컬 Microsoft Edge 사용 |
 | 네이티브 개발 | `npm run tauri dev` | OS toolchain 필요. Vite와 Tauri 기본 창 실행 |
 | 네이티브 비번들 빌드 | `npm run tauri build -- --no-bundle` | 컴파일 확인용, 설치 파일/Release 게시 없음 |
 | Rust 형식 | `cargo fmt --manifest-path src-tauri/Cargo.toml -- --check` | Rust 도구 필요 |
@@ -43,7 +46,7 @@
 | Rust 정적 검사 | `cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings` | OS toolchain 필요 |
 | Rust 테스트 | `cargo test --manifest-path src-tauri/Cargo.toml` | 이번 최소 실행부에는 별도 Rust 테스트 사례 없음. 앱 실행 증거의 대체 아님 |
 
-브라우저 스모크는 개발 서버에서 desktop/narrow viewport를 확인한다. 외부 HTTP 요청을 차단·기록하고 합성 표시, 미분석 상태, 콘솔 오류와 수평 overflow를 검사한다. 스크린샷은 제외 경로 `test-results/`에 남긴다. 이는 WebView2/WKWebView 네이티브 창 검증이 아니다. Edge가 없는 테스트 환경은 Edge 설치 또는 후속 테스트 러너 검토가 필요하다.
+브라우저 스모크는 개발 서버에서 desktop/narrow viewport를 확인한다. 외부 HTTP 요청을 차단·기록하고 합성 표시, 미분석 상태, 콘솔 오류와 수평 overflow를 검사한다. 스크린샷은 제외 경로 `test-results/`에 남긴다. 이는 WebView2/WKWebView 네이티브 창 검증이 아니다. 기본 Chromium은 Playwright가 고정한 버전을 사용하고, 별도 Edge 테스트는 기존 설치가 필요하다.
 
 Rust 의존성은 Tauri major 2의 허용 범위만 선언했다. 이 환경에 Cargo가 없어 **Cargo.lock을 생성·검증하지 못했다**. 네이티브 도구가 준비되면 Cargo 명령으로 lockfile을 생성해 commit하고 동일 결과를 재검증해야 한다. 그 전에는 네이티브 의존성 재현과 AC-M0-01 전체 통과를 주장하지 않는다.
 
