@@ -45,6 +45,8 @@
 
 [준비 Issue #1](https://github.com/pinegreen83/job-application-agent/issues/1) → [M0 계획](../plans/M0_PLAN.md): NFR-001/003/004/006/011, DEV-001~008, FR-004-01/02/07, FR-006-01/02/04/06, SPEC-011과 AC-M0-01~06의 작업·검증 경계를 연결한다. 구현 테스트 및 OS 검증은 아직 미실행이며 상세 AC는 검토 대기다. 리뷰 PR과 준비 검증 결과는 Issue의 연결 PR에서 확인한다.
 
+후속: PR #2에서 M0 계획·AC 승인 후 [M0-A Issue #3](https://github.com/pinegreen83/job-application-agent/issues/3) → [개발 절차](DEVELOPMENT.md) → [검증 기록](verification/M0_A_RESULTS.md)으로 FR-006-01 / AC-006-01 / AC-M0-01을 연결한다. frontend 검사만 통과했으며 native/OS 조건과 AC 전체는 미충족이다.
+
 ## 이전 v0.1에서 의도적으로 변경한 내용
 1. **핵심 우선순위:** RAG 작성 자동화 → 대량 공고의 중복 관리와 개인화 적합성 평가.
 2. **기술:** Electron/TypeScript/Windows-first → Tauri 2/Rust/React+TS/SQLite, Windows+macOS 동등 지원.
