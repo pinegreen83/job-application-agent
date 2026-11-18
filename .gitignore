@@ -1,0 +1,41 @@
+# Build/dependency output
+node_modules/
+dist/
+target/
+coverage/
+*.tsbuildinfo
+
+# Local environment, credentials and signing material
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+credentials*.json
+secrets*.json
+
+# Private user data: never commit originals, even as test fixtures
+/private/
+/local-data/
+/user-data/
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.eml
+*.msg
+*.pdf
+*.doc
+*.docx
+*.log
+
+# Machine/editor state
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
