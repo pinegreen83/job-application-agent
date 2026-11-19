@@ -23,8 +23,14 @@ Windows NT 10.0.26200.0 / x64, 공통 Node 24.22.3, npm 11.10.1. Node는 기존 
 
 Windows npm.cmd 실행은 고정 문자열만 shell에 전달하며 사용자 텍스트를 명령에 삽입하지 않는다. 공통 스크립트는 global Git identity/credential·시스템 도구·보안 정책을 변경하지 않으며 source/branch reset이나 자동 push를 수행하지 않는다. setup은 lockfile의 의존성 설치, frontend build, 선택한 경우 브라우저 다운로드·테스트만 수행한다.
 
+## 2026-11-19 main 병합 이후 보완
+
+사용자가 M0-A PR #4를 병합하고 PR #6 소스 개발환경 설정 마무리를 요청했다. PR #6의 base를 main으로 조정하고 main을 반영했으며 병합 완료 M0-A 브랜치는 정리했다. 삭제된 M0-A 브랜치 checkout 안내와 진행 상태 문서를 갱신했다.
+
+현재 CI는 Windows/macOS에서 새 기기와 **동일한 `npm run setup -- --tests`**를 실행한다. 이 명령의 npm ci·doctor·frontend check/build·Chromium 준비·스모크가 실패하면 작업도 실패한다. 이후 기존 Rust 검사·native 비번들 build·npm/Cargo lockfile 무변경 검사를 유지한다. 실제 실행 head·run URL·결과는 PR #6에 기록한다.
+
 ## 미검증과 기존 제한
 
-실제 두 번째 PC, macOS의 setup/native 실행, MSVC/Xcode·Rust compiler·Cargo.lock 생성은 미검증이다. native 진단 성공도 SDK·CLI 보안 정책·앱 실행 성공의 증거가 아니다. 기존 개발 의존성 high 5건과 M0-A native 차단은 계속 남아 있다. [M0-A 결과](M0_A_RESULTS.md)의 AC-M0-01 전체 미충족 및 M0 Gate 미통과 판정을 유지한다.
+원래 공통 setup 검증은 Windows fresh clone이며 macOS 공통 setup은 위 CI에서 별도로 확인한다. CI 성공은 모든 실제 두 번째 PC의 SDK·권한·native 창 실행을 보증하지 않는다. native 진단 성공도 SDK·CLI 보안 정책·앱 실행 성공의 증거가 아니다. M0-A는 후속 Windows 직접 관찰과 Mac 사용자 확인, Cargo.lock·CI 검증을 완료해 병합됐다. 개발 의존성 위험은 [Issue #7](https://github.com/pinegreen83/job-application-agent/issues/7)에 남아 있고 [M0-A 결과](M0_A_RESULTS.md)의 M0 전체 Gate 경계는 유지한다.
 
-이 변경은 `feat/3-m0-a-foundation` 위의 별도 PR이다. main에 아직 없는 기반 코드를 전제로 하므로 새 기기는 문서의 `feat/5-cross-device-setup` 브랜치를 받아야 한다. 사용자 merge 순서와 후속 base 조정은 [WORK_STATUS.md](../WORK_STATUS.md)를 따른다.
+이 변경은 이제 main을 대상으로 한다. PR #6 리뷰 중에는 문서의 `feat/5-cross-device-setup` 브랜치를 받고, 사용자 merge 뒤에는 main을 받는다. 최신 상태는 [WORK_STATUS.md](../WORK_STATUS.md)와 PR #6을 확인한다.

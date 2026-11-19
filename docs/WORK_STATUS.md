@@ -1,6 +1,6 @@
 # 개발 이어가기 상태
 
-- 갱신: 2026-11-18
+- 갱신: 2026-11-19
 - 저장소: [pinegreen83/job-application-agent](https://github.com/pinegreen83/job-application-agent)
 - 현재 이어갈 브랜치: `feat/5-cross-device-setup`
 - 설치/동기화 절차: [NEW_MACHINE.md](NEW_MACHINE.md)
@@ -9,13 +9,13 @@
 ## 확정·완료된 준비
 
 - PR #2는 사용자가 계획·M0 AC 승인 체크 후 직접 merge했다. main의 준비 완료 기준 commit은 `1a1b0c9`다.
-- [M0-A Issue #3](https://github.com/pinegreen83/job-application-agent/issues/3) / [PR #4](https://github.com/pinegreen83/job-application-agent/pull/4): 합성 화면·Tauri 실행부·npm/Cargo lockfile·개발 문서와 Windows/macOS CI. 양쪽 OS CI 및 Windows 실기기 창·종료/재실행 통과. Mac은 macOS Sequoia 15.8.1/Apple M1 Pro에서 정상 화면·종료/재실행을 사용자가 확인했다. 최신 CI·승인 상태는 PR을 확인한다. [M0-A 결과](verification/M0_A_RESULTS.md).
-- [Issue #5](https://github.com/pinegreen83/job-application-agent/issues/5) / [Draft PR #6](https://github.com/pinegreen83/job-application-agent/pull/6): 사용자 추가 요청에 따라 다른 기기의 checkout/setup/진단/작업 handoff를 구성. #4 브랜치를 base로 하는 별도 stacked PR이다. PR #4와 #6 모두 사용자 merge 대기다.
+- [M0-A Issue #3](https://github.com/pinegreen83/job-application-agent/issues/3) / [PR #4](https://github.com/pinegreen83/job-application-agent/pull/4): 사용자가 2026-11-19 main에 직접 병합했다(`de88088`). 양쪽 OS CI, Windows 직접 관찰과 Mac 사용자 확인으로 기본 창·종료/재실행을 검증했다. [M0-A 결과](verification/M0_A_RESULTS.md).
+- [Issue #5](https://github.com/pinegreen83/job-application-agent/issues/5) / [PR #6](https://github.com/pinegreen83/job-application-agent/pull/6): 소스 개발환경의 checkout/setup/진단/작업 handoff 설정. main을 기반으로 변경했고 M0-A와의 충돌을 해소했다. 최신 승인·CI·merge 상태는 PR을 확인한다. 기존 Codex 대화 원격 접속과는 다른 범위다.
 
 ## 우선 남은 검증
 
-1. 개발 의존성 high 영향 패키지 5건의 수정판을 확인하고 검증 후 갱신한다. 하나의 picomatch advisory가 의존 경로에 전파된 결과이며 runtime npm audit은 0건이다. 잔여 위험은 사용자 리뷰 대상으로 유지한다.
-2. PR 리뷰와 사용자 merge를 기다린다. #4가 main에 merge되면 후속 stacked PR #6의 base/변경 diff를 확인해 main 대상으로 조정한다. 자동 merge하지 않는다. #6에는 최신 M0-A 기반을 반영하고 개발 문서 충돌을 해소했다.
+1. [Issue #7](https://github.com/pinegreen83/job-application-agent/issues/7)에서 개발 의존성 high 영향 패키지 5건의 수정판을 확인하고 검증 후 갱신한다. 하나의 picomatch advisory가 의존 경로에 전파된 결과이며 runtime npm audit은 0건이다.
+2. PR #6의 공통 setup을 Windows/macOS CI에서 직접 검증하고 사용자 리뷰·merge를 기다린다. #4 병합 완료 브랜치는 정리했다. #6도 사용자 merge 후 브랜치를 정리한다. Codex는 자동 merge하지 않는다.
 3. 승인된 다음 작은 작업 M0-B의 IPC/권한 설계·테스트 범위를 확인한다. 현재 기본 창 검증은 M0-B~F 완료 증거가 아니다.
 
 M0-A의 양쪽 OS 기본 창 확인을 마쳤으며 수용·merge는 사용자 리뷰로 남긴다. M0 전체 Gate는 미통과다. M0-B~F의 IPC·SQLite·Mock·전체 CI/보안·OS Gate는 별도 범위이며 관련 설계 유보 사항을 착수 전에 확인한다. 최초 릴리스의 전체 통합 범위는 [URS](URS.md)/[PRD](PRD.md)를 따른다.

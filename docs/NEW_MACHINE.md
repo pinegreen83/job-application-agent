@@ -6,7 +6,7 @@ GitHub의 코드·명세·작업 문서로 개발을 이어간다. 실제 메일
 
 ## 현재 코드 받기
 
-현재 M0-A 구현은 [PR #4](https://github.com/pinegreen83/job-application-agent/pull/4)의 `feat/3-m0-a-foundation`에 있고, 다른 기기 설정은 그 위의 `feat/5-cross-device-setup`에 있다. 두 PR이 main에 통합되기 전에는 **아래 브랜치**를 checkout해야 실행 코드와 이 설정을 모두 받는다.
+M0-A [PR #4](https://github.com/pinegreen83/job-application-agent/pull/4)는 main에 병합됐다. 공통 setup/doctor를 추가하는 [PR #6](https://github.com/pinegreen83/job-application-agent/pull/6)이 아직 리뷰 중이라면 **아래 브랜치**를 checkout한다. 이 안내는 소스 개발환경 이관이며 기존 Codex 프로젝트·대화의 원격 연결 설정과는 별개다.
 
 Windows PowerShell과 macOS 터미널에서 같은 명령을 사용한다. 원하는 작업 폴더에서 시작한다.
 
@@ -16,7 +16,14 @@ cd job-application-agent
 git status --short --branch
 ```
 
-PR들이 main에 merge된 후 새 checkout은 `git clone https://github.com/pinegreen83/job-application-agent.git`으로 받는다. 이미 main을 clone했다면 로컬 수정이 없는 상태에서 `git fetch origin` 후 `git switch --track origin/feat/5-cross-device-setup`을 사용한다. 브랜치가 이미 로컬에 있으면 `git switch feat/5-cross-device-setup` 후 `git pull --ff-only`한다. 미커밋 변경을 reset하거나 덮어쓰지 않는다.
+PR #6이 main에 merge된 뒤 새 기기에서는 다음 명령으로 받는다. 이때는 리뷰 브랜치를 받을 필요가 없다.
+
+```sh
+git clone https://github.com/pinegreen83/job-application-agent.git
+cd job-application-agent
+```
+
+이미 main을 clone했는데 PR #6을 리뷰하려면 로컬 수정이 없는 상태에서 `git fetch origin` 후 `git switch --track origin/feat/5-cross-device-setup`을 사용한다. 브랜치가 이미 로컬에 있으면 `git switch feat/5-cross-device-setup` 후 `git pull --ff-only`한다. 미커밋 변경을 reset하거나 덮어쓰지 않는다.
 
 ## 도구 준비와 공통 실행
 
@@ -68,7 +75,7 @@ git push
 
 위 경로 자리표시는 실제 경로로 바꾼다. `git add .`로 로컬 개인 자료까지 무심코 올리지 않는다. push하지 않은 commit/미커밋 변경은 다른 기기에 전달되지 않는다. unfinished 코드는 해당 Issue 브랜치에 기록하고 main 직접 수정·자동 merge를 하지 않는다.
 
-다른 기기에서는 로컬 작업을 먼저 확인하고 같은 브랜치에서 최신 commit을 받는다.
+다른 기기에서는 로컬 작업을 먼저 확인하고 같은 브랜치에서 최신 commit을 받는다. 아래는 PR #6 리뷰 브랜치의 예시다. 후속 작업에서는 해당 Issue 브랜치 이름으로 바꾼다.
 
 ```sh
 git status --short --branch
@@ -90,4 +97,4 @@ GitHub Public clone은 로그인 없이 가능하지만 push/Issue/PR 작업은 
 
 ## 검증 범위
 
-Windows의 공백 경로에 격리된 fresh checkout과 공통 Node로 setup/build 및 Chromium·Edge 각 2건을 검증했다. [검증 결과](verification/CROSS_DEVICE_RESULTS.md)를 참조한다. 공통 setup 자체의 Mac 검증은 별도이며 M0-A Mac native 실행은 사용자 확인을 기록했다. 개발 의존성 high 영향 패키지 5건과 M0 전체 Gate 미통과는 [M0-A 결과](verification/M0_A_RESULTS.md)의 제한을 유지한다.
+Windows의 공백 경로에 격리된 fresh checkout과 공통 Node로 setup/build 및 Chromium·Edge 각 2건을 검증했다. 현재 CI도 Windows/macOS에서 **같은 `npm run setup -- --tests` 명령**을 실행하고 Rust 검사·native build와 lockfile 무변경을 확인한다. 최신 CI 결과는 PR #6, 명령과 환경은 [검증 기록](verification/CROSS_DEVICE_RESULTS.md)을 참조한다. CI의 setup 성공은 모든 실제 기기의 SDK·권한·native 창 실행을 보증하지 않는다. M0-A Mac native 실행은 별도 사용자 확인으로 기록했다. 개발 의존성 위험은 [Issue #7](https://github.com/pinegreen83/job-application-agent/issues/7), M0 전체 Gate 경계는 [M0-A 결과](verification/M0_A_RESULTS.md)를 따른다.
