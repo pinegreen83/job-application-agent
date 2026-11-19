@@ -6,24 +6,17 @@ GitHub의 코드·명세·작업 문서로 개발을 이어간다. 실제 메일
 
 ## 현재 코드 받기
 
-M0-A [PR #4](https://github.com/pinegreen83/job-application-agent/pull/4)는 main에 병합됐다. 공통 setup/doctor를 추가하는 [PR #6](https://github.com/pinegreen83/job-application-agent/pull/6)이 아직 리뷰 중이라면 **아래 브랜치**를 checkout한다. 이 안내는 소스 개발환경 이관이며 기존 Codex 프로젝트·대화의 원격 연결 설정과는 별개다.
+M0-A [PR #4](https://github.com/pinegreen83/job-application-agent/pull/4)와 공통 setup/doctor [PR #6](https://github.com/pinegreen83/job-application-agent/pull/6)은 main에 병합됐다. 이 안내는 소스 개발환경 이관이며 기존 Codex 프로젝트·대화의 원격 연결 설정과는 별개다.
 
 Windows PowerShell과 macOS 터미널에서 같은 명령을 사용한다. 원하는 작업 폴더에서 시작한다.
 
 ```sh
-git clone --branch feat/5-cross-device-setup https://github.com/pinegreen83/job-application-agent.git
+git clone https://github.com/pinegreen83/job-application-agent.git
 cd job-application-agent
 git status --short --branch
 ```
 
-PR #6이 main에 merge된 뒤 새 기기에서는 다음 명령으로 받는다. 이때는 리뷰 브랜치를 받을 필요가 없다.
-
-```sh
-git clone https://github.com/pinegreen83/job-application-agent.git
-cd job-application-agent
-```
-
-이미 main을 clone했는데 PR #6을 리뷰하려면 로컬 수정이 없는 상태에서 `git fetch origin` 후 `git switch --track origin/feat/5-cross-device-setup`을 사용한다. 브랜치가 이미 로컬에 있으면 `git switch feat/5-cross-device-setup` 후 `git pull --ff-only`한다. 미커밋 변경을 reset하거나 덮어쓰지 않는다.
+진행 중인 [Issue #8](https://github.com/pinegreen83/job-application-agent/issues/8)의 폴더 분리를 리뷰하려면 로컬 수정이 없는 상태에서 `git fetch origin` 후 `git switch --track origin/feat/8-frontend-backend-layout`을 사용한다. 브랜치가 이미 로컬에 있으면 `git switch feat/8-frontend-backend-layout` 후 `git pull --ff-only`한다. 병합 뒤에는 main을 사용한다. 미커밋 변경을 reset하거나 덮어쓰지 않는다.
 
 ## 도구 준비와 공통 실행
 
@@ -75,12 +68,12 @@ git push
 
 위 경로 자리표시는 실제 경로로 바꾼다. `git add .`로 로컬 개인 자료까지 무심코 올리지 않는다. push하지 않은 commit/미커밋 변경은 다른 기기에 전달되지 않는다. unfinished 코드는 해당 Issue 브랜치에 기록하고 main 직접 수정·자동 merge를 하지 않는다.
 
-다른 기기에서는 로컬 작업을 먼저 확인하고 같은 브랜치에서 최신 commit을 받는다. 아래는 PR #6 리뷰 브랜치의 예시다. 후속 작업에서는 해당 Issue 브랜치 이름으로 바꾼다.
+다른 기기에서는 로컬 작업을 먼저 확인하고 같은 브랜치에서 최신 commit을 받는다. 아래는 Issue #8 작업 브랜치의 예시다. 후속 작업에서는 해당 Issue 브랜치 이름으로 바꾼다.
 
 ```sh
 git status --short --branch
 git fetch origin
-git switch feat/5-cross-device-setup
+git switch feat/8-frontend-backend-layout
 git pull --ff-only
 npm run setup
 ```

@@ -40,8 +40,8 @@ UR-001~016은 최종 사용자 흐름의 배경이다. M0에서 메일 수집·J
 
 | 작업 / 의존성 | URS·FR·AC | 예상 변경 파일 | 테스트 방법 / Done 기준 |
 |---|---|---|---|
-| M0-A: 개발 환경·합성 기본 화면 / 계획 승인 | NFR-004/011; FR-006-01; AC-006-01; AC-M0-01 | `package.json`, lockfile, `src/`, `src-tauri/Cargo.toml`, `src-tauri/tauri.conf.json`, `docs/DEVELOPMENT.md` | 새 checkout의 문서화된 설치·실행, 키 없이 합성 기본 화면 확인. TS 검사/Rust 컴파일, Windows와 macOS 절차 기록. 임의 네트워크 호출 없음 |
-| M0-B: 최소 IPC·권한 / A | NFR-011; ARCHITECTURE 경계; AC-M0-02 | `src-tauri/src/commands.rs`, command 등록부, capabilities/CSP 설정, `src/` IPC 래퍼, 경계 테스트 | 허용 명령/정상 입력 성공, 잘못된 타입·범위·미등록 명령 거부. 렌더러의 임의 파일/셸 접근 불가 및 비밀값 비노출 확인. 허용 목록·소유권/빌림·오류 전달 이유를 PR에 설명 |
+| M0-A: 개발 환경·합성 기본 화면 / 계획 승인 | NFR-004/011; FR-006-01; AC-006-01; AC-M0-01 | `package.json`, lockfile, `frontend/src/`, `backend/Cargo.toml`, `backend/tauri.conf.json`, `docs/DEVELOPMENT.md` | 새 checkout의 문서화된 설치·실행, 키 없이 합성 기본 화면 확인. TS 검사/Rust 컴파일, Windows와 macOS 절차 기록. 임의 네트워크 호출 없음 |
+| M0-B: 최소 IPC·권한 / A | NFR-011; ARCHITECTURE 경계; AC-M0-02 | `backend/src/commands.rs`, command 등록부, capabilities/CSP 설정, `frontend/src/` IPC 래퍼, 경계 테스트 | 허용 명령/정상 입력 성공, 잘못된 타입·범위·미등록 명령 거부. 렌더러의 임의 파일/셸 접근 불가 및 비밀값 비노출 확인. 허용 목록·소유권/빌림·오류 전달 이유를 PR에 설명 |
 | M0-C: 합성 SQLite 저장·복원 / B | NFR-001/011; ADR-002; AC-M0-03 | Rust 저장 모듈·migration, 테스트, 합성 입력 화면, `docs/DEVELOPMENT.md` | 격리된 앱 전용 로컬 DB에 고정 합성 레코드 저장·조회, 프로세스 종료/재실행 후 같은 값 확인. 쓰기 실패를 강제해 오류 표시·기존 데이터 보존 확인. 저장 경계·트랜잭션·오류 처리 이유 기록 |
 | M0-D: Provider Mock 계약 / B (보존 통합 검사는 C 후) | NFR-003/006/011; FR-004-01/02/07; AC-004-04/06/07의 Mock 부분; AC-M0-04 | Rust Provider 계약·Mock 모듈, 계약/통합 테스트, `docs/PROVIDER_CONTRACT.md` | 아래 Mock 사례 통과. 외부 endpoint·키 없이 실행, 결과를 작업 종류별 식별. async 소유권·취소·오류 변환·기존 저장본 보존 이유 기록. 실제 연결/AI 품질은 미검증 |
 | M0-E: PR CI 품질·OS 빌드 / A~D, OS 조합 승인 | DEV-006; NFR-004/011; FR-006-02/06; AC-006-02/04; AC-M0-05 | `.github/workflows/pr.yml`, 검사 설정, 검사/빌드 문서 | Rust fmt/clippy·TS 정적 검사·단위/통합·기밀 스캔·승인된 Windows/macOS matrix 빌드 결과가 PR에 각각 존재. 로그/아티팩트 제외 경계 검사. 실패가 성공으로 가려지지 않음. Release 게시 단계 없음 |

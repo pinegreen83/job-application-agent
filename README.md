@@ -6,7 +6,7 @@
 
 ## 요구사항부터 시작하기
 
-**다른 기기에서 이어가기:** [새 기기 설정](docs/NEW_MACHINE.md)과 [현재 작업 상태](docs/WORK_STATUS.md)를 확인한다. PR #6 리뷰 중에는 문서의 리뷰 브랜치를, 병합 후에는 main을 받아 `npm run setup`을 실행한다.
+**다른 기기에서 이어가기:** [새 기기 설정](docs/NEW_MACHINE.md)과 [현재 작업 상태](docs/WORK_STATUS.md)를 확인한다. main 또는 현재 Issue의 작업 브랜치를 받아 루트에서 `npm run setup`을 실행한다.
 1. `docs/URS.md` — 사용자가 직접 제시한 필요와 미확정 요구사항 (제품 명세의 상위 기준)
 2. `docs/PRD.md` — 최초 통합 프로토타입 범위와 제품 흐름
 3. `specs/**/spec.md` — 기능별 FR·AC 및 테스트 가능한 완료 기준
@@ -24,6 +24,19 @@
 - CI/CD: PR 자동 검사, 마일스톤마다 OS별 설치 파일을 GitHub Releases에 배포
 
 Tauri 선택은 OS WebView 재사용과 Rust 학습이라는 결정이다. 더 빠르고 메모리를 적게 쓴다는 주장은 **측정 전 가정**이다.
+
+## 폴더 구조
+
+```text
+frontend/       React·TypeScript 화면, Vite/TS 설정, Playwright 테스트
+backend/        Tauri 2·Rust 네이티브 실행부, Cargo 설정·lock, 권한·앱 설정
+scripts/        공통 환경 진단·설치·설정 검사
+docs/ specs/ plans/   요구사항·설계·작업 계획·검증 기록
+.github/        Issue/PR 템플릿과 Windows/macOS CI
+package.json    루트 공통 npm 명령과 단일 package-lock.json
+```
+
+`backend/`는 앱 내부 네이티브 계층이다. 화면과는 제한된 Tauri IPC로 연결하며 별도 HTTP 서버를 추가하지 않는다. 명령은 모두 저장소 루트에서 실행하고, 프론트 빌드 결과는 `frontend/dist/`에 생성한다.
 
 ## 최초 릴리스 범위
 메일 첨부·다중 공고/중복 처리·JD 분석부터 이력서 맞춤 수정·자체 문항 작성·AI 검토·사용자 승인·직접 제출 자료 제공·PDF/전형/아침 알림 관리까지 포함하는 통합 프로토타입이다. 기본 정렬은 **선택 분야와 JD의 연관성**을 우선하며 별도 개인 선호 입력·평가는 제외한다. Provider는 초기 공통 기반으로 도입한다. 세부 범위는 `docs/PRD.md`, 내부 개발 순서와 승인할 기준은 `docs/MILESTONES.md`를 따른다.

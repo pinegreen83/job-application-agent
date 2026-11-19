@@ -44,7 +44,7 @@ icoHeader.writeUInt16LE(1, 10);
 icoHeader.writeUInt16LE(32, 12);
 icoHeader.writeUInt32LE(png.length, 14);
 icoHeader.writeUInt32LE(22, 18);
-const directory = new URL('../src-tauri/icons/', import.meta.url);
+const directory = new URL('../backend/icons/', import.meta.url);
 mkdirSync(directory, { recursive: true });
 writeFileSync(new URL('icon.png', directory), png);
 writeFileSync(new URL('icon.ico', directory), Buffer.concat([icoHeader, png]));
