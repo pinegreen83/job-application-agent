@@ -16,7 +16,7 @@ cd job-application-agent
 git status --short --branch
 ```
 
-진행 중인 [Issue #8](https://github.com/pinegreen83/job-application-agent/issues/8)의 폴더 분리를 리뷰하려면 로컬 수정이 없는 상태에서 `git fetch origin` 후 `git switch --track origin/feat/8-frontend-backend-layout`을 사용한다. 브랜치가 이미 로컬에 있으면 `git switch feat/8-frontend-backend-layout` 후 `git pull --ff-only`한다. 병합 뒤에는 main을 사용한다. 미커밋 변경을 reset하거나 덮어쓰지 않는다.
+진행 중인 [Issue #10](https://github.com/pinegreen83/job-application-agent/issues/10)의 M0-B를 리뷰하려면 로컬 수정이 없는 상태에서 `git fetch origin` 후 `git switch --track origin/feat/10-minimal-ipc-permissions`을 사용한다. 브랜치가 이미 로컬에 있으면 `git switch feat/10-minimal-ipc-permissions` 후 `git pull --ff-only`한다. 병합 뒤에는 main을 사용한다. 미커밋 변경을 reset하거나 덮어쓰지 않는다.
 
 ## 도구 준비와 공통 실행
 
@@ -68,12 +68,12 @@ git push
 
 위 경로 자리표시는 실제 경로로 바꾼다. `git add .`로 로컬 개인 자료까지 무심코 올리지 않는다. push하지 않은 commit/미커밋 변경은 다른 기기에 전달되지 않는다. unfinished 코드는 해당 Issue 브랜치에 기록하고 main 직접 수정·자동 merge를 하지 않는다.
 
-다른 기기에서는 로컬 작업을 먼저 확인하고 같은 브랜치에서 최신 commit을 받는다. 아래는 Issue #8 작업 브랜치의 예시다. 후속 작업에서는 해당 Issue 브랜치 이름으로 바꾼다.
+다른 기기에서는 로컬 작업을 먼저 확인하고 같은 브랜치에서 최신 commit을 받는다. 아래는 Issue #10 작업 브랜치의 예시다. 후속 작업에서는 해당 Issue 브랜치 이름으로 바꾼다.
 
 ```sh
 git status --short --branch
 git fetch origin
-git switch feat/8-frontend-backend-layout
+git switch feat/10-minimal-ipc-permissions
 git pull --ff-only
 npm run setup
 ```

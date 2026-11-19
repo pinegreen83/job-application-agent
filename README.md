@@ -54,6 +54,8 @@ package.json    루트 공통 npm 명령과 단일 package-lock.json
 
 M0-A에서는 키 없이 실행하는 합성 기본 화면과 Tauri 실행부를 추가한다. 개발 명령과 OS별 준비·검증 한계는 [개발 실행 문서](docs/DEVELOPMENT.md)를 따른다. 빠른 브라우저 확인은 `npm ci` → `npm run dev`이며, 실제 Tauri 실행에는 Rust와 OS별 빌드 도구가 필요하다. Windows/macOS 실기기에서 M0-A 기본 창·종료·재실행을 확인했다. 검증 근거와 의존성 재검사 이력은 [검증 기록](docs/verification/M0_A_RESULTS.md)을 참조한다. M0 전체 Gate는 아직 미완료다.
 
+M0-B는 승인된 합성 입력 검증 명령과 main 창 전용 최소 권한을 추가한다. [IPC 계약·검증 절차](docs/M0_B_IPC.md)를 참조한다. 저장·Provider 연결은 후속 단계다. 브라우저에서는 Rust 호출을 실행하지 않는다.
+
 프로필과 메일 샘플은 퍼블릭 저장소에 넣지 말고 개인정보가 제거된 합성 Fixtures만 사용한다. 초기 대상 OS/배포 조건은 `docs/MILESTONES.md` 및 `specs/006-ci-release/spec.md`를 따른다.
 
 저장소 준비 [Issue #1](https://github.com/pinegreen83/job-application-agent/issues/1)의 [M0 실행 계획](plans/M0_PLAN.md)과 M0 AC는 PR #2에서 사용자 승인·merge됐다. [M0-A Issue #3](https://github.com/pinegreen83/job-application-agent/issues/3)의 결과·제한은 [검증 기록](docs/verification/M0_A_RESULTS.md)에 남긴다. 후속 상세 Spec의 일괄 승인이나 M0 Gate 통과를 의미하지 않는다.

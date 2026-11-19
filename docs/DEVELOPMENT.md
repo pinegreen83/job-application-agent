@@ -1,8 +1,8 @@
-# M0-A 개발 실행
+# M0 개발 실행
 
 관련: [Issue #3](https://github.com/pinegreen83/job-application-agent/issues/3), [M0 계획](../plans/M0_PLAN.md), FR-006-01 / AC-006-01 / AC-M0-01, NFR-004/011.
 
-이 단계는 Tauri 2/Rust 실행부와 React/TypeScript 합성 기본 화면을 준비한다. 고정 합성 공고 1건은 실행 확인용이며 실제 분석·추천 결과가 아니다. 입력, 파일/DB 저장, Provider, 사용자 정의 IPC 명령은 없다. 외부 모델 계정·API 키·개인 문서는 필요하지 않다.
+Tauri 2/Rust 실행부와 React/TypeScript 합성 기본 화면을 사용한다. 고정 합성 공고 1건은 실행 확인용이며 실제 분석·추천 결과가 아니다. M0-B는 승인된 합성 입력 검증 명령을 추가한다. 파일/DB 저장과 Provider는 아직 없으며 외부 모델 계정·API 키·개인 문서는 필요하지 않다. 계약·권한·OS별 스모크는 [M0_B_IPC.md](M0_B_IPC.md)를 따른다.
 
 ## 공통 준비
 
@@ -44,7 +44,7 @@
 | Rust 형식 | `cargo fmt --manifest-path backend/Cargo.toml -- --check` | Rust 도구 필요 |
 | Rust 컴파일 | `cargo check --manifest-path backend/Cargo.toml` | OS toolchain 필요 |
 | Rust 정적 검사 | `cargo clippy --manifest-path backend/Cargo.toml --all-targets -- -D warnings` | OS toolchain 필요 |
-| Rust 테스트 | `cargo test --manifest-path backend/Cargo.toml` | 이번 최소 실행부에는 별도 Rust 테스트 사례 없음. 앱 실행 증거의 대체 아님 |
+| Rust 테스트 | `cargo test --manifest-path backend/Cargo.toml --locked` | M0-B 입력·실제 handler/ACL 테스트. 실제 WebView 실행 증거의 대체 아님 |
 
 브라우저 스모크는 개발 서버에서 desktop/narrow viewport를 확인한다. 외부 HTTP 요청을 차단·기록하고 합성 표시, 미분석 상태, 콘솔 오류와 수평 overflow를 검사한다. 스크린샷은 제외 경로 `test-results/`에 남긴다. 이는 WebView2/WKWebView 네이티브 창 검증이 아니다. CI와 기본 테스트는 고정 Chromium을 사용하고 기존 Edge 테스트도 별도 명령으로 유지한다.
 
@@ -63,8 +63,8 @@
 ## 설정과 보안 경계
 
 - `backend/tauri.conf.json`: 개발용 identifier `dev.jobapplicationagent.app`, 비출시 버전 `0.0.0`, installer bundling 비활성. 최종 제품 ID/릴리스 결정이 아니다.
-- 사용자 정의 Rust command, OS/셸/HTTP/file plugin, capability 파일이 없다. 빈 capability 목록은 Tauri에서 파일 자동 탐색을 뜻하므로 **추후 capability 파일 추가 시 권한을 다시 검토**해야 한다. 실제 IPC 거부 검증은 M0-B 범위다.
-- production CSP는 외부 연결을 막고, dev CSP는 Vite 로컬 서버·HMR에 필요한 loopback 연결과 개발용 inline script/style만 허용한다. 설정 schema 통과는 네이티브 런타임 보안 검증이 아니다.
+- M0-B는 `m0_validate_record` 하나를 AppManifest/ACL에 연결한다. 명시적으로 선택한 capability가 local main 창에 해당 명령만 허용한다. OS/셸/HTTP/file plugin·core:default 권한은 없다. capability/명령 추가 시 권한을 다시 검토한다.
+- production CSP는 Tauri 로컬 IPC만 허용하고, dev CSP는 추가로 Vite 로컬 서버·HMR loopback 연결과 개발용 inline script/style을 허용한다. 설정 schema 통과는 네이티브 런타임 보안 검증이 아니다.
 - Vite는 `127.0.0.1:1420`으로 제한하고 다른 포트로 자동 전환하지 않는다. 네트워크에 노출하지 말고 작업 후 종료한다.
 - 개발 아이콘은 저장소의 `scripts/generate-dev-icon.mjs`로 만든 고정 placeholder다. 재생성: `node scripts/generate-dev-icon.mjs`.
 - 실제 메일·프로필·지원서·키를 소스/fixtures/로그에 넣지 않는다. `dist`, `target`, `test-results`, `.env`, 원본 개인 문서와 로컬 데이터는 Git에서 제외한다.

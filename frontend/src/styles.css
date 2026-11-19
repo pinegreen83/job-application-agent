@@ -26,4 +26,11 @@ h3 { font-size: 22px; letter-spacing: -.03em; margin: 10px 0 7px; }
 .notice h2 { font-size: 14px; margin-bottom: 6px; }
 .notice p { font-size: 13px; color: #4d6356; }
 footer { padding: 26px 0 12px; color: #627067; font-size: 12px; }
+.validation { margin-top: 24px; padding: 24px; background: #fff; border: 1px solid #d8e1da; border-radius: 16px; overflow-wrap: anywhere; }
+.validation form { display: grid; gap: 10px; margin-top: 16px; }
+.validation textarea { width: 100%; min-height: 90px; resize: vertical; padding: 10px; border: 1px solid #879c8c; border-radius: 6px; font: inherit; }
+.validation button { justify-self: start; margin: 8px 0; padding: 8px 16px; background: #285c45; color: #fff; border: 0; border-radius: 6px; font: inherit; cursor: pointer; }
+.validation button:disabled { background: #e5eae5; color: #59675e; cursor: default; }
+.validation details { margin-top: 16px; }
+.validation [role="alert"] { color: #8b2924; }
 @media (max-width: 600px) { .workspace { padding: 24px 20px; } .intro { padding-top: 34px; } .sample-card { padding: 20px; } .notice { padding: 18px 20px; } .eyebrow { font-size: 10px; } .app-header { gap: 10px; } }

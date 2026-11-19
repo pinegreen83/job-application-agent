@@ -1,3 +1,5 @@
+import SyntheticValidation from './SyntheticValidation';
+
 // Handwritten synthetic display data. This is not a parser or a ranking result.
 const example = {
   id: 'synthetic-m0-a-001',
@@ -12,7 +14,7 @@ export default function App() {
       <header className="app-header">
         <span className="app-mark" aria-hidden="true">J</span>
         <div><p className="eyebrow">JOB APPLICATION AGENT</p><p className="header-caption">개발 환경 확인</p></div>
-        <span className="badge">M0-A</span>
+        <span className="badge">M0-B</span>
       </header>
 
       <section className="intro" aria-labelledby="page-title">
@@ -30,6 +32,8 @@ export default function App() {
           <dl className="sample-details"><div><dt>식별자</dt><dd>{example.id}</dd></div><div><dt>분석 결과</dt><dd>분석하지 않음</dd></div></dl>
         </article>
       </section>
+
+      <SyntheticValidation />
 
       <aside className="notice" aria-labelledby="notice-title">
         <h2 id="notice-title">아직 연결되지 않은 기능</h2>

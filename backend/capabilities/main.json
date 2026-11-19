@@ -1,0 +1,8 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "main-synthetic-validation",
+  "description": "Only local main window may validate the M0 synthetic record.",
+  "local": true,
+  "windows": ["main"],
+  "permissions": ["allow-m0-validate-record"]
+}
