@@ -4,5 +4,5 @@
   "description": "Only local main window may validate and persist the fixed M0 synthetic record.",
   "local": true,
   "windows": ["main"],
-  "permissions": ["allow-m0-validate-record", "allow-m0-save-record", "allow-m0-load-record", "allow-m0-simulate-save-failure"]
+  "permissions": ["allow-m0-validate-record", "allow-m0-save-record", "allow-m0-load-record", "allow-m0-simulate-save-failure", "allow-m0-start-mock", "allow-m0-mock-result", "allow-m0-cancel-mock"]
 }

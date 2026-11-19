@@ -162,3 +162,151 @@ fn storage_ipc_persists_rolls_back_and_rejects_extra_arguments_or_untrusted_call
         original
     );
 }
+
+#[test]
+fn mock_ipc_contract_failures_cancellation_and_acl_preserve_existing_database() {
+    use crate::storage::StorageLocation;
+    let directory = tempfile::tempdir().unwrap();
+    let app = super::application(tauri::test::mock_builder().manage(StorageLocation::new(Ok(
+        directory.path().join("mock-isolated.sqlite3"),
+    ))))
+    .build(super::application_context())
+    .unwrap();
+    let main = tauri::WebviewWindowBuilder::new(&app, "main", Default::default())
+        .build()
+        .unwrap();
+    let other = tauri::WebviewWindowBuilder::new(&app, "other", Default::default())
+        .build()
+        .unwrap();
+    let local = if cfg!(windows) {
+        "http://tauri.localhost"
+    } else {
+        "tauri://localhost"
+    };
+    let original = json!({"id":"synthetic-m0-001", "text":"Mock 이전 합성 저장본 🦀"});
+    invoke(
+        &main,
+        local,
+        "m0_save_record",
+        json!({"record":original}).into(),
+    )
+    .unwrap();
+    let input = |operation: &str, scenario: &str, model: &str| json!({"request":{"sourceId":"synthetic-m0-001","operation":operation,"modelId":model,"scenario":scenario}});
+    for operation in ["analyze", "evaluate", "generate", "review"] {
+        let ticket = invoke(
+            &main,
+            local,
+            "m0_start_mock",
+            input(operation, "success", "mock-synthetic-v1").into(),
+        )
+        .unwrap();
+        let result = invoke(
+            &main,
+            local,
+            "m0_mock_result",
+            json!({"requestId":ticket["requestId"]}).into(),
+        )
+        .unwrap();
+        assert_eq!(result["status"], "succeeded");
+        assert_eq!(result["operation"], operation);
+        assert_eq!(result["result"]["output"]["kind"], operation);
+        assert_eq!(
+            invoke(
+                &main,
+                local,
+                "m0_cancel_mock",
+                json!({"requestId":ticket["requestId"]}).into()
+            )
+            .unwrap_err()["code"],
+            "NOT_RUNNING"
+        );
+    }
+    for (scenario, model, code) in [
+        ("connection_error", "mock-synthetic-v1", "CONNECTION_ERROR"),
+        ("network_error", "mock-synthetic-v1", "NETWORK_ERROR"),
+        ("quota_exceeded", "mock-synthetic-v1", "QUOTA_EXCEEDED"),
+        ("success", "mock-unsupported", "UNSUPPORTED_MODEL"),
+        (
+            "incomplete_response",
+            "mock-synthetic-v1",
+            "INCOMPLETE_RESPONSE",
+        ),
+    ] {
+        let ticket = invoke(
+            &main,
+            local,
+            "m0_start_mock",
+            input("generate", scenario, model).into(),
+        )
+        .unwrap();
+        let result = invoke(
+            &main,
+            local,
+            "m0_mock_result",
+            json!({"requestId":ticket["requestId"]}).into(),
+        )
+        .unwrap();
+        assert_eq!(result["status"], "failed");
+        assert_eq!(result["error"]["code"], code);
+        assert!(result.get("result").is_none());
+        assert_eq!(
+            invoke(&main, local, "m0_load_record", json!({}).into()).unwrap(),
+            original
+        );
+    }
+    let waiting = invoke(
+        &main,
+        local,
+        "m0_start_mock",
+        input("review", "wait_for_cancel", "mock-synthetic-v1").into(),
+    )
+    .unwrap();
+    assert_eq!(
+        invoke(
+            &main,
+            local,
+            "m0_start_mock",
+            input("analyze", "success", "mock-synthetic-v1").into()
+        )
+        .unwrap_err()["code"],
+        "MOCK_BUSY"
+    );
+    invoke(
+        &main,
+        local,
+        "m0_cancel_mock",
+        json!({"requestId":waiting["requestId"]}).into(),
+    )
+    .unwrap();
+    let result = invoke(
+        &main,
+        local,
+        "m0_mock_result",
+        json!({"requestId":waiting["requestId"]}).into(),
+    )
+    .unwrap();
+    assert_eq!(result["status"], "cancelled");
+    assert_eq!(result["error"]["code"], "CANCELLED");
+    assert_eq!(
+        invoke(&main, local, "m0_load_record", json!({}).into()).unwrap(),
+        original
+    );
+    for command in ["m0_start_mock", "m0_mock_result", "m0_cancel_mock"] {
+        let error = invoke(
+            &main,
+            local,
+            command,
+            json!({"apiKey":"synthetic-secret-never-reflect"}).into(),
+        )
+        .unwrap_err();
+        assert_eq!(error["code"], "INVALID_MOCK_REQUEST");
+        assert!(!error.to_string().contains("synthetic-secret"));
+        for (window, origin) in [(&other, local), (&main, "https://example.invalid")] {
+            assert!(invoke(window, origin, command, json!({}).into())
+                .unwrap_err()
+                .as_str()
+                .unwrap()
+                .contains("not allowed"));
+        }
+    }
+}

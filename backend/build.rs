@@ -12,6 +12,9 @@ fn main() {
             "m0_save_record",
             "m0_load_record",
             "m0_simulate_save_failure",
+            "m0_start_mock",
+            "m0_mock_result",
+            "m0_cancel_mock",
         ]));
     if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc") {
         // The linker embeds the same Common Controls dependency in every

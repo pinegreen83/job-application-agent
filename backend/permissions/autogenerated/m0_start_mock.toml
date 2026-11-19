@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-m0-start-mock"
+description = "Enables the m0_start_mock command without any pre-configured scope."
+commands.allow = ["m0_start_mock"]
+
+[[permission]]
+identifier = "deny-m0-start-mock"
+description = "Denies the m0_start_mock command without any pre-configured scope."
+commands.deny = ["m0_start_mock"]
