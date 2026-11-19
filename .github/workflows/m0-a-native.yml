@@ -39,8 +39,8 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            src-tauri/target
-          key: m0-a-${{ runner.os }}-${{ runner.arch }}-rust-1.100.0-${{ hashFiles('src-tauri/Cargo.lock') }}
+            backend/target
+          key: native-backend-${{ runner.os }}-${{ runner.arch }}-rust-1.100.0-${{ hashFiles('backend/Cargo.lock') }}
       - name: Tool versions
         run: |
           node --version
@@ -50,14 +50,14 @@ jobs:
       - name: Common setup, build, and browser integration
         run: npm run setup -- --tests
       - name: Rust format
-        run: cargo fmt --manifest-path src-tauri/Cargo.toml -- --check
+        run: cargo fmt --manifest-path backend/Cargo.toml -- --check
       - name: Rust check
-        run: cargo check --manifest-path src-tauri/Cargo.toml --locked
+        run: cargo check --manifest-path backend/Cargo.toml --locked
       - name: Rust lint
-        run: cargo clippy --manifest-path src-tauri/Cargo.toml --locked --all-targets -- -D warnings
+        run: cargo clippy --manifest-path backend/Cargo.toml --locked --all-targets -- -D warnings
       - name: Rust tests
-        run: cargo test --manifest-path src-tauri/Cargo.toml --locked
+        run: cargo test --manifest-path backend/Cargo.toml --locked
       - name: Tauri debug build without installers
         run: npm run tauri build -- --debug --no-bundle --ci -- --locked
       - name: Lockfiles remain unchanged
-        run: git diff --exit-code -- package-lock.json src-tauri/Cargo.lock
+        run: git diff --exit-code -- package-lock.json backend/Cargo.lock

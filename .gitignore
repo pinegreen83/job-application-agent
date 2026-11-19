@@ -5,7 +5,7 @@ target/
 coverage/
 test-results/
 playwright-report/
-/src-tauri/gen/
+/backend/gen/
 *.tsbuildinfo
 
 # Local environment, credentials and signing material

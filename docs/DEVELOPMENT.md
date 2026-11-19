@@ -36,19 +36,19 @@
 | 의존성 재현 | `npm ci` | JS/TS 개발 도구 설치 |
 | 타입·설정 검사 | `npm run check` | TypeScript, CLI 패키지의 JSON schema 구조·패턴(URI format 제외), 아이콘 경로 검사 |
 | 브라우저 개발 | `npm run dev` | `http://127.0.0.1:1420`에서 합성 화면, Ctrl+C로 종료 |
-| frontend build | `npm run build` | `dist/` 생성. 데스크톱 설치본 아님 |
+| frontend build | `npm run build` | `frontend/dist/` 생성. 데스크톱 설치본 아님 |
 | 브라우저 준비·스모크 | `npm run setup -- --tests` | lock 설치·build·고정 Chromium 준비·테스트. 이후 `npm test`로 재실행, 1420 포트가 비어 있어야 함 |
 | 기존 Edge 스모크 | `npm run test:edge` | 로컬 Microsoft Edge 사용 |
 | 네이티브 개발 | `npm run tauri dev` | OS toolchain 필요. Vite와 Tauri 기본 창 실행 |
 | 네이티브 비번들 빌드 | `npm run tauri build -- --no-bundle` | 컴파일 확인용, 설치 파일/Release 게시 없음 |
-| Rust 형식 | `cargo fmt --manifest-path src-tauri/Cargo.toml -- --check` | Rust 도구 필요 |
-| Rust 컴파일 | `cargo check --manifest-path src-tauri/Cargo.toml` | OS toolchain 필요 |
-| Rust 정적 검사 | `cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings` | OS toolchain 필요 |
-| Rust 테스트 | `cargo test --manifest-path src-tauri/Cargo.toml` | 이번 최소 실행부에는 별도 Rust 테스트 사례 없음. 앱 실행 증거의 대체 아님 |
+| Rust 형식 | `cargo fmt --manifest-path backend/Cargo.toml -- --check` | Rust 도구 필요 |
+| Rust 컴파일 | `cargo check --manifest-path backend/Cargo.toml` | OS toolchain 필요 |
+| Rust 정적 검사 | `cargo clippy --manifest-path backend/Cargo.toml --all-targets -- -D warnings` | OS toolchain 필요 |
+| Rust 테스트 | `cargo test --manifest-path backend/Cargo.toml` | 이번 최소 실행부에는 별도 Rust 테스트 사례 없음. 앱 실행 증거의 대체 아님 |
 
 브라우저 스모크는 개발 서버에서 desktop/narrow viewport를 확인한다. 외부 HTTP 요청을 차단·기록하고 합성 표시, 미분석 상태, 콘솔 오류와 수평 overflow를 검사한다. 스크린샷은 제외 경로 `test-results/`에 남긴다. 이는 WebView2/WKWebView 네이티브 창 검증이 아니다. CI와 기본 테스트는 고정 Chromium을 사용하고 기존 Edge 테스트도 별도 명령으로 유지한다.
 
-`src-tauri/Cargo.lock`을 Cargo 1.100.0으로 생성했고 Tauri 2.12.6을 포함해 Rust 의존성을 고정했다. 검증 시 Cargo 명령에 `--locked`를 사용한다. lock 생성은 native compile 성공 증거가 아니다.
+`backend/Cargo.lock`을 Cargo 1.100.0으로 생성했고 Tauri 2.12.6을 포함해 Rust 의존성을 고정했다. 검증 시 Cargo 명령에 `--locked`를 사용한다. lock 생성은 native compile 성공 증거가 아니다.
 
 ## PR 네이티브 CI
 
@@ -62,7 +62,7 @@
 
 ## 설정과 보안 경계
 
-- `src-tauri/tauri.conf.json`: 개발용 identifier `dev.jobapplicationagent.app`, 비출시 버전 `0.0.0`, installer bundling 비활성. 최종 제품 ID/릴리스 결정이 아니다.
+- `backend/tauri.conf.json`: 개발용 identifier `dev.jobapplicationagent.app`, 비출시 버전 `0.0.0`, installer bundling 비활성. 최종 제품 ID/릴리스 결정이 아니다.
 - 사용자 정의 Rust command, OS/셸/HTTP/file plugin, capability 파일이 없다. 빈 capability 목록은 Tauri에서 파일 자동 탐색을 뜻하므로 **추후 capability 파일 추가 시 권한을 다시 검토**해야 한다. 실제 IPC 거부 검증은 M0-B 범위다.
 - production CSP는 외부 연결을 막고, dev CSP는 Vite 로컬 서버·HMR에 필요한 loopback 연결과 개발용 inline script/style만 허용한다. 설정 schema 통과는 네이티브 런타임 보안 검증이 아니다.
 - Vite는 `127.0.0.1:1420`으로 제한하고 다른 포트로 자동 전환하지 않는다. 네트워크에 노출하지 말고 작업 후 종료한다.

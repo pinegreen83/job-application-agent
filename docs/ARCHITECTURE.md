@@ -28,6 +28,8 @@ Windows / macOS (단일 사용자 로컬 앱)
 ```
 
 ## 책임/경계
+소스 배치는 `frontend/`(React/TypeScript 렌더러·UI 테스트)와 `backend/`(Tauri/Rust 네이티브 실행부)로 분리한다([Issue #8](https://github.com/pinegreen83/job-application-agent/issues/8)). 루트의 단일 npm manifest/lock과 공통 스크립트는 유지한다. 이는 기존 책임 경계의 디렉터리 분리이며 별도 HTTP 서버나 새 제품 기능을 도입하지 않는다.
+
 - **Renderer:** 사용자 입력 및 표시만 담당. 저장소·API 키·임의 OS 명령에 직접 접근하지 않는다.
 - **Tauri Rust commands:** 명시된 기능 단위로 입력 검증, 경로 및 권한 통제. OS 기능/DB/외부 HTTP는 네이티브 계층에서 처리한다.
 - **Mail intake:** 사용자가 선택한 `.eml` 또는 복사 텍스트에서 다수 공고 추출; 발신 인증을 절대적인 신뢰 근거로 사용하지 않는다.
