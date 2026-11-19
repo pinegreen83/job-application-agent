@@ -35,6 +35,8 @@ CSP `connect-src`에는 Tauri 로컬 IPC 전송(`ipc:`, `http://ipc.localhost`)�
 
 Windows MockRuntime 테스트도 네이티브 메뉴의 `TaskDialogIndirect`에 링크된다. MSVC에서는 링커가 Common Controls v6 manifest를 앱과 테스트 실행 파일에 동일하게 포함하도록 했다. Tauri 기본 manifest와의 중복 포함은 피한다. 이는 권한 상승이나 보안 정책 변경이 아니다.
 
+앱과 MockRuntime은 같은 handler·context 함수를 사용한다. `generate_context!`는 한 곳에서만 확장해 macOS의 프로세스 단위 Info.plist 심볼 중복을 피하고 같은 설정·ACL을 검증한다.
+
 ## Windows·Mac 실기기 스모크
 
 각 OS에서 아래를 따로 기록한다. Windows 성공이나 CI 성공으로 Mac 실기기 확인을 대체하지 않는다.

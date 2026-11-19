@@ -27,7 +27,7 @@ fn invoke(
 #[test]
 fn real_handler_and_acl_enforce_input_origin_and_window_boundaries() {
     let app = super::application(tauri::test::mock_builder())
-        .build(tauri::generate_context!())
+        .build(super::application_context())
         .unwrap();
     let main = tauri::WebviewWindowBuilder::new(&app, "main", Default::default())
         .build()

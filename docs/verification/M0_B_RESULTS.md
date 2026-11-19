@@ -20,7 +20,7 @@
 
 ## macOS
 
-실기기 **미검증**. 기존 M0-A의 Apple M1 Pro/macOS 15.8.1 기본 창 확인은 이번 IPC·권한 변경의 증거로 재사용하지 않는다. 현재 PR의 macOS CI 결과는 연결 PR에 기록한다. CI가 성공해도 WKWebView에서의 정상·입력 오류·12/12 경계 검사·종료/재실행을 별도로 확인해야 한다.
+실기기 **미검증**. 기존 M0-A의 Apple M1 Pro/macOS 15.8.1 기본 창 확인은 이번 IPC·권한 변경의 증거로 재사용하지 않는다. 초기 CI에서 앱·테스트의 `generate_context!` 중복 확장으로 Info.plist 심볼 충돌이 검출돼 공통 context 함수 한 곳에서만 확장하도록 수정했다. 수정 head의 macOS CI 결과는 연결 PR에 기록한다. CI가 성공해도 WKWebView에서의 정상·입력 오류·12/12 경계 검사·종료/재실행을 별도로 확인해야 한다.
 
 ## 남은 Gate
 
