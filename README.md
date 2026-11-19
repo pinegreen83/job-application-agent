@@ -56,6 +56,8 @@ M0-A에서는 키 없이 실행하는 합성 기본 화면과 Tauri 실행부를
 
 M0-B는 승인된 합성 입력 검증 명령과 main 창 전용 최소 권한을 추가한다. [IPC 계약](docs/M0_B_IPC.md)을 참조한다. M0-C는 [합성 SQLite 저장·복원](docs/M0_C_SQLITE.md)을 추가한다. 실제 제품 데이터 저장·Provider 연결은 후속 단계다. 브라우저에서는 native 호출을 실행하지 않는다. Mac 실기기 확인은 사용자 요청으로 M0 통합 때 진행하며 현재는 미검증이다.
 
+M0-D는 [Provider Mock 계약](docs/PROVIDER_CONTRACT.md)의 4종 합성 결과·오류·실제 비동기 취소·기존 저장본 보존을 검증한다. 실제 모델 호출·AI 품질 검증·초안 자동 저장은 하지 않는다. 최신 구현과 main 통합 상태는 [작업 상태](docs/WORK_STATUS.md)를 확인한다.
+
 프로필과 메일 샘플은 퍼블릭 저장소에 넣지 말고 개인정보가 제거된 합성 Fixtures만 사용한다. 초기 대상 OS/배포 조건은 `docs/MILESTONES.md` 및 `specs/006-ci-release/spec.md`를 따른다.
 
 저장소 준비 [Issue #1](https://github.com/pinegreen83/job-application-agent/issues/1)의 [M0 실행 계획](plans/M0_PLAN.md)과 M0 AC는 PR #2에서 사용자 승인·merge됐다. [M0-A Issue #3](https://github.com/pinegreen83/job-application-agent/issues/3)의 결과·제한은 [검증 기록](docs/verification/M0_A_RESULTS.md)에 남긴다. 후속 상세 Spec의 일괄 승인이나 M0 Gate 통과를 의미하지 않는다.

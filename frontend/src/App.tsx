@@ -1,5 +1,6 @@
 import SyntheticValidation from './SyntheticValidation';
 import SyntheticStorage from './SyntheticStorage';
+import SyntheticMock from './SyntheticMock';
 
 // Handwritten synthetic display data. This is not a parser or a ranking result.
 const example = {
@@ -15,7 +16,7 @@ export default function App() {
       <header className="app-header">
         <span className="app-mark" aria-hidden="true">J</span>
         <div><p className="eyebrow">JOB APPLICATION AGENT</p><p className="header-caption">개발 환경 확인</p></div>
-        <span className="badge">M0-C</span>
+        <span className="badge">M0-D</span>
       </header>
 
       <section className="intro" aria-labelledby="page-title">
@@ -36,6 +37,7 @@ export default function App() {
 
       <SyntheticValidation />
       <SyntheticStorage />
+      <SyntheticMock />
 
       <aside className="notice" aria-labelledby="notice-title">
         <h2 id="notice-title">아직 연결되지 않은 기능</h2>

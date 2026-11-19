@@ -20,6 +20,7 @@ test('AC-M0-01 browser portion: synthetic startup without external services', as
   await expect(page.getByRole('article')).toContainText('분석하지 않음');
   await expect(page.getByRole('complementary')).toContainText('외부 서비스에 전송하지 않습니다');
   await expect(page.getByRole('button', { name: 'Rust로 검증' })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Mock 시작', exact: true })).toBeDisabled();
   await expect(page.getByRole('status')).toContainText('브라우저에서는 Rust 검증을 실행할 수 없습니다');
   await page.evaluate(() => document.fonts.ready);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);

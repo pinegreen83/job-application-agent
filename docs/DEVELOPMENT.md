@@ -6,6 +6,8 @@ Tauri 2/Rust 실행부와 React/TypeScript 합성 기본 화면을 사용한다.
 
 ## 공통 준비
 
+M0-D의 합성 Provider UI·오류·취소·저장본 보존 절차는 [PROVIDER_CONTRACT.md](PROVIDER_CONTRACT.md)를 따른다. 실제 계정/키 없이 실행한다. main 통합 및 병합 대기는 [WORK_STATUS.md](WORK_STATUS.md)에 기록한다.
+
 다른 기기에서 처음 받을 때는 [NEW_MACHINE.md](NEW_MACHINE.md)를 따른다. 공통 권장 Node 버전은 `.node-version`/`.nvmrc`에 기록하며 `npm run doctor`, `npm run setup`으로 환경 점검·의존성 설치·frontend build를 수행할 수 있다.
 
 1. 저장소를 checkout한다. Node.js 22.12 이상과 npm 10 이상을 준비한다. 새 환경에는 지원 중인 Node LTS 사용을 권장한다. 이번 Windows frontend 검증에는 기존 Node 25.7.0/npm 11.10.1을 사용했다.

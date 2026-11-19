@@ -1,10 +1,13 @@
 mod commands;
 mod error;
+mod provider;
+mod provider_commands;
 mod record;
 mod storage;
 
 fn application<R: tauri::Runtime>(builder: tauri::Builder<R>) -> tauri::Builder<R> {
     builder
+        .manage(provider::MockService::default())
         .setup(|app| {
             use tauri::Manager;
             // Tests seed an isolated path before setup. Renderer cannot alter it.
@@ -23,6 +26,9 @@ fn application<R: tauri::Runtime>(builder: tauri::Builder<R>) -> tauri::Builder<
             commands::m0_save_record,
             commands::m0_load_record,
             commands::m0_simulate_save_failure,
+            provider_commands::m0_start_mock,
+            provider_commands::m0_mock_result,
+            provider_commands::m0_cancel_mock,
         ])
 }
 
