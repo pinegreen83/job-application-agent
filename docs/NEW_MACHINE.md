@@ -97,4 +97,4 @@ GitHub Public clone은 로그인 없이 가능하지만 push/Issue/PR 작업은 
 
 ## 검증 범위
 
-Windows의 공백 경로에 격리된 fresh checkout과 공통 Node로 setup/build 및 Chromium·Edge 각 2건을 검증했다. 현재 CI도 Windows/macOS에서 **같은 `npm run setup -- --tests` 명령**을 실행하고 Rust 검사·native build와 lockfile 무변경을 확인한다. 최신 CI 결과는 PR #6, 명령과 환경은 [검증 기록](verification/CROSS_DEVICE_RESULTS.md)을 참조한다. CI의 setup 성공은 모든 실제 기기의 SDK·권한·native 창 실행을 보증하지 않는다. M0-A Mac native 실행은 별도 사용자 확인으로 기록했다. 개발 의존성 위험은 [Issue #7](https://github.com/pinegreen83/job-application-agent/issues/7), M0 전체 Gate 경계는 [M0-A 결과](verification/M0_A_RESULTS.md)를 따른다.
+Windows의 공백 경로에 격리된 fresh checkout과 공통 Node로 setup/build 및 Chromium·Edge 각 2건을 검증했다. 현재 CI도 Windows/macOS에서 **같은 `npm run setup -- --tests` 명령**을 실행하고 Rust 검사·native build와 lockfile 무변경을 확인한다. 최신 CI 결과는 PR #6, 명령과 환경은 [검증 기록](verification/CROSS_DEVICE_RESULTS.md)을 참조한다. CI의 setup 성공은 모든 실제 기기의 SDK·권한·native 창 실행을 보증하지 않는다. M0-A Mac native 실행은 별도 사용자 확인으로 기록했다. 이전 advisory는 철회돼 현재 전체 audit은 0건이며 [의존성 검토](verification/M0_A_DEPENDENCY_REVIEW.md)에 이력을 남겼다. M0 전체 Gate 경계는 [M0-A 결과](verification/M0_A_RESULTS.md)를 따른다.

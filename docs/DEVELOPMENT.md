@@ -69,8 +69,10 @@
 - 개발 아이콘은 저장소의 `scripts/generate-dev-icon.mjs`로 만든 고정 placeholder다. 재생성: `node scripts/generate-dev-icon.mjs`.
 - 실제 메일·프로필·지원서·키를 소스/fixtures/로그에 넣지 않는다. `dist`, `target`, `test-results`, `.env`, 원본 개인 문서와 로컬 데이터는 Git에서 제외한다.
 
-## 알려진 의존성 문제
+## 의존성 검사 기록
+
+2026-11-19 GitHub가 아래 picomatch advisory를 철회했다. 패키지·lockfile 변경 없이 fresh clone 설치와 전체 npm audit을 다시 확인해 현재 0건이다. [검토 기록](verification/M0_A_DEPENDENCY_REVIEW.md)의 공식 철회 시각과 재검사 근거를 참조한다.
 
 2026-11-18 `npm audit` 결과 high 영향 패키지 5건: picomatch의 ReDoS([GHSA-fc5q-39xc-vjpf](https://github.com/advisories/GHSA-fc5q-39xc-vjpf))가 Vite/tinyglobby/fdir/plugin-react 의존 경로에 전파된다. 최신 picomatch 4.0.7도 영향 범위이며 수정판을 확인하지 못했다. 자동 제안 버전도 격리 검증했으나 다른 Vite 취약점이 검출돼 적용하지 않았다. [상세 검토](verification/M0_A_DEPENDENCY_REVIEW.md)를 참조한다.
 
-현재 앱 runtime 의존성은 React/React DOM이며 이 문제는 개발 도구 경로다. 개발 서버 loopback 제한은 노출을 줄일 뿐 취약점 해결을 뜻하지 않는다. `npm audit --omit=dev`와 전체 audit을 구분해 기록하고, 수정판이 나오면 별도 검증 후 갱신한다. 미해결 상태는 리뷰/Gate 검토 대상으로 남긴다.
+앱 runtime 의존성은 React/React DOM이며 당시 문제는 개발 도구 경로였다. 개발 서버 loopback 제한을 보안 검사 대체로 간주하지 않는다. 의존성 변경 시 전체와 runtime npm audit을 구분해 확인하고 새 검출은 근거와 함께 별도 추적한다.

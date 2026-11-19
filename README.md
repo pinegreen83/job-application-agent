@@ -6,7 +6,7 @@
 
 ## 요구사항부터 시작하기
 
-**다른 기기에서 이어가기:** [새 기기 설정](docs/NEW_MACHINE.md)과 [현재 작업 상태](docs/WORK_STATUS.md)를 확인한다. 현재 구현은 PR 브랜치에 있으므로 문서에 지정된 브랜치를 checkout한 뒤 `npm run setup`을 실행한다.
+**다른 기기에서 이어가기:** [새 기기 설정](docs/NEW_MACHINE.md)과 [현재 작업 상태](docs/WORK_STATUS.md)를 확인한다. PR #6 리뷰 중에는 문서의 리뷰 브랜치를, 병합 후에는 main을 받아 `npm run setup`을 실행한다.
 1. `docs/URS.md` — 사용자가 직접 제시한 필요와 미확정 요구사항 (제품 명세의 상위 기준)
 2. `docs/PRD.md` — 최초 통합 프로토타입 범위와 제품 흐름
 3. `specs/**/spec.md` — 기능별 FR·AC 및 테스트 가능한 완료 기준
@@ -39,7 +39,7 @@ Tauri 선택은 OS WebView 재사용과 Rust 학습이라는 결정이다. 더 �
 ## 현 상태와 개발 시작
 이 저장소에는 명세와 M0-A 개발용 실행 기반이 있다. 완성된 앱이나 CI 파이프라인은 아니다. 후속 개발도 `CODEX_START.md`와 승인된 기능별 명세를 먼저 확인한다.
 
-M0-A에서는 키 없이 실행하는 합성 기본 화면과 Tauri 실행부를 추가한다. 개발 명령과 OS별 준비·검증 한계는 [개발 실행 문서](docs/DEVELOPMENT.md)를 따른다. 빠른 브라우저 확인은 `npm ci` → `npm run dev`이며, 실제 Tauri 실행에는 Rust와 OS별 빌드 도구가 필요하다. Windows/macOS 실기기에서 M0-A 기본 창·종료·재실행을 확인했다. 검증 근거는 [검증 기록](docs/verification/M0_A_RESULTS.md)을 참조한다. 개발 의존성 잔여 위험 판단과 M0 전체 Gate는 남아 있다.
+M0-A에서는 키 없이 실행하는 합성 기본 화면과 Tauri 실행부를 추가한다. 개발 명령과 OS별 준비·검증 한계는 [개발 실행 문서](docs/DEVELOPMENT.md)를 따른다. 빠른 브라우저 확인은 `npm ci` → `npm run dev`이며, 실제 Tauri 실행에는 Rust와 OS별 빌드 도구가 필요하다. Windows/macOS 실기기에서 M0-A 기본 창·종료·재실행을 확인했다. 검증 근거와 의존성 재검사 이력은 [검증 기록](docs/verification/M0_A_RESULTS.md)을 참조한다. M0 전체 Gate는 아직 미완료다.
 
 프로필과 메일 샘플은 퍼블릭 저장소에 넣지 말고 개인정보가 제거된 합성 Fixtures만 사용한다. 초기 대상 OS/배포 조건은 `docs/MILESTONES.md` 및 `specs/006-ci-release/spec.md`를 따른다.
 

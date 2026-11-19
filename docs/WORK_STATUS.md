@@ -14,7 +14,7 @@
 
 ## 우선 남은 검증
 
-1. [Issue #7](https://github.com/pinegreen83/job-application-agent/issues/7)에서 개발 의존성 high 영향 패키지 5건의 수정판을 확인하고 검증 후 갱신한다. 하나의 picomatch advisory가 의존 경로에 전파된 결과이며 runtime npm audit은 0건이다.
+1. 의존성 변경 시 전체/runtime audit을 재확인한다. [Issue #7](https://github.com/pinegreen83/job-application-agent/issues/7)의 기존 advisory는 GitHub에서 철회됐고 2026-11-19 같은 lockfile의 전체 audit은 0건이다. [철회·재검사 기록](verification/M0_A_DEPENDENCY_REVIEW.md).
 2. PR #6의 공통 setup을 Windows/macOS CI에서 직접 검증하고 사용자 리뷰·merge를 기다린다. #4 병합 완료 브랜치는 정리했다. #6도 사용자 merge 후 브랜치를 정리한다. Codex는 자동 merge하지 않는다.
 3. 승인된 다음 작은 작업 M0-B의 IPC/권한 설계·테스트 범위를 확인한다. 현재 기본 창 검증은 M0-B~F 완료 증거가 아니다.
 

@@ -29,8 +29,12 @@ Windows npm.cmd 실행은 고정 문자열만 shell에 전달하며 사용자 �
 
 현재 CI는 Windows/macOS에서 새 기기와 **동일한 `npm run setup -- --tests`**를 실행한다. 이 명령의 npm ci·doctor·frontend check/build·Chromium 준비·스모크가 실패하면 작업도 실패한다. 이후 기존 Rust 검사·native 비번들 build·npm/Cargo lockfile 무변경 검사를 유지한다. 실제 실행 head·run URL·결과는 PR #6에 기록한다.
 
+Windows의 새 공백 경로 clone(commit `017aedb`)에서 Node 24.22.3/npm 11.10.1로 같은 setup 명령을 다시 실행해 성공했다. Chromium desktop/narrow 2건, doctor --native, git diff 무변경·깨끗한 상태를 확인했다. 기존 Edge 테스트는 최초 검증 이력을 유지하며 이 문서/CI 통합 작업에서 반복 실행하지 않았다.
+
+fresh 설치 및 전체 audit은 0건이었다. GitHub advisory API에서 기존 picomatch advisory의 철회를 확인했으며 버전/lockfile 변경 없이 검출 상태가 갱신됐다. [상세 의존성 기록](M0_A_DEPENDENCY_REVIEW.md)을 참조한다.
+
 ## 미검증과 기존 제한
 
-원래 공통 setup 검증은 Windows fresh clone이며 macOS 공통 setup은 위 CI에서 별도로 확인한다. CI 성공은 모든 실제 두 번째 PC의 SDK·권한·native 창 실행을 보증하지 않는다. native 진단 성공도 SDK·CLI 보안 정책·앱 실행 성공의 증거가 아니다. M0-A는 후속 Windows 직접 관찰과 Mac 사용자 확인, Cargo.lock·CI 검증을 완료해 병합됐다. 개발 의존성 위험은 [Issue #7](https://github.com/pinegreen83/job-application-agent/issues/7)에 남아 있고 [M0-A 결과](M0_A_RESULTS.md)의 M0 전체 Gate 경계는 유지한다.
+원래 공통 setup 검증은 Windows fresh clone이며 macOS 공통 setup은 위 CI에서 별도로 확인한다. CI 성공은 모든 실제 두 번째 PC의 SDK·권한·native 창 실행을 보증하지 않는다. native 진단 성공도 SDK·CLI 보안 정책·앱 실행 성공의 증거가 아니다. M0-A는 후속 Windows 직접 관찰과 Mac 사용자 확인, Cargo.lock·CI 검증을 완료해 병합됐다. 기존 의존성 검출은 철회·재검사 이력으로 남기며 [M0-A 결과](M0_A_RESULTS.md)의 M0 전체 Gate 경계는 유지한다.
 
 이 변경은 이제 main을 대상으로 한다. PR #6 리뷰 중에는 문서의 `feat/5-cross-device-setup` 브랜치를 받고, 사용자 merge 뒤에는 main을 받는다. 최신 상태는 [WORK_STATUS.md](../WORK_STATUS.md)와 PR #6을 확인한다.
