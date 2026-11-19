@@ -1,4 +1,5 @@
 import SyntheticValidation from './SyntheticValidation';
+import SyntheticStorage from './SyntheticStorage';
 
 // Handwritten synthetic display data. This is not a parser or a ranking result.
 const example = {
@@ -14,7 +15,7 @@ export default function App() {
       <header className="app-header">
         <span className="app-mark" aria-hidden="true">J</span>
         <div><p className="eyebrow">JOB APPLICATION AGENT</p><p className="header-caption">개발 환경 확인</p></div>
-        <span className="badge">M0-B</span>
+        <span className="badge">M0-C</span>
       </header>
 
       <section className="intro" aria-labelledby="page-title">
@@ -34,10 +35,11 @@ export default function App() {
       </section>
 
       <SyntheticValidation />
+      <SyntheticStorage />
 
       <aside className="notice" aria-labelledby="notice-title">
         <h2 id="notice-title">아직 연결되지 않은 기능</h2>
-        <p>메일 가져오기, JD 분석, 로컬 저장과 AI 연결은 다음 개발 단계에서 추가됩니다. 현재 화면은 입력한 정보를 저장하거나 외부 서비스에 전송하지 않습니다.</p>
+        <p>메일 가져오기, JD 분석과 AI 연결은 다음 개발 단계에서 추가됩니다. 합성 로컬 저장 외의 제품 데이터 저장은 아직 구현되지 않았으며 외부 서비스에 전송하지 않습니다.</p>
       </aside>
       <footer>개발 확인용 화면 · 최종 제품 디자인은 추후 검토합니다.</footer>
     </main>

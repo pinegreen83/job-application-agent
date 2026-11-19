@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-m0-save-record"
+description = "Enables the m0_save_record command without any pre-configured scope."
+commands.allow = ["m0_save_record"]
+
+[[permission]]
+identifier = "deny-m0-save-record"
+description = "Denies the m0_save_record command without any pre-configured scope."
+commands.deny = ["m0_save_record"]

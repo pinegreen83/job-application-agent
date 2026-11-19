@@ -1,121 +1,89 @@
-use serde::{Deserialize, Serialize};
-use serde_json::Value;
-use tauri::ipc::{InvokeBody, Request};
+use crate::{
+    error::{CommandError, INVALID_RECORD, STORAGE_UNAVAILABLE},
+    record::{validate_body, SyntheticRecord},
+    storage::{SaveMode, StorageLocation},
+};
+use serde::Serialize;
+use tauri::{
+    ipc::{InvokeBody, Request},
+    State,
+};
 
-#[derive(Debug, Deserialize, PartialEq, Serialize)]
-#[serde(deny_unknown_fields)]
-pub(crate) struct SyntheticRecord {
-    id: String,
-    text: String,
-}
-
-#[derive(Deserialize)]
-#[serde(deny_unknown_fields)]
-struct Arguments {
+#[derive(Serialize)]
+pub(crate) struct RecordResponse {
+    #[serde(flatten)]
     record: SyntheticRecord,
-}
-
-#[derive(Debug, PartialEq, Serialize)]
-pub(crate) struct ValidatedRecord {
-    id: String,
-    text: String,
     status: &'static str,
 }
 
-#[derive(Debug, PartialEq, Serialize)]
-pub(crate) struct ValidationError {
-    code: &'static str,
-    message: &'static str,
-}
-
-const INVALID_RECORD: ValidationError = ValidationError {
-    code: "INVALID_RECORD",
-    message: "합성 레코드의 형식과 입력 범위를 확인해 주세요.",
-};
-
-fn validate_body(body: &Value) -> Result<ValidatedRecord, ValidationError> {
-    // Borrow the transport body. Deserialization owns just the typed strings;
-    // discard serde errors rather than reflecting unknown fields or input values.
-    let arguments = Arguments::deserialize(body).map_err(|_| INVALID_RECORD)?;
-    let record = arguments.record;
-    if record.id != "synthetic-m0-001"
-        || record.text.trim().is_empty()
-        || record.text.chars().count() > 256
-        || record.text.chars().any(char::is_control)
-    {
-        return Err(INVALID_RECORD);
-    }
-    // Move validated strings into the response without normalizing user input.
-    // This function has no persistence, environment access, or asynchronous work.
-    Ok(ValidatedRecord {
-        id: record.id,
-        text: record.text,
-        status: "validated",
-    })
-}
-
-#[tauri::command]
-pub(crate) fn m0_validate_record(request: Request<'_>) -> Result<ValidatedRecord, ValidationError> {
+fn record_request(request: Request<'_>) -> Result<SyntheticRecord, CommandError> {
     match request.body() {
         InvokeBody::Json(body) => validate_body(body),
         InvokeBody::Raw(_) => Err(INVALID_RECORD),
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use serde_json::json;
+#[tauri::command]
+pub(crate) fn m0_validate_record(request: Request<'_>) -> Result<RecordResponse, CommandError> {
+    Ok(RecordResponse {
+        record: record_request(request)?,
+        status: "validated",
+    })
+}
 
-    #[test]
-    fn preserves_unicode_and_boundary_without_normalization() {
-        for text in [" 한글 e\u{301} 🦀 ".to_owned(), "🦀".repeat(256)] {
-            let result =
-                validate_body(&json!({"record": {"id": "synthetic-m0-001", "text": text}}))
-                    .unwrap();
-            assert_eq!(result.text, text);
-            assert_eq!(result.status, "validated");
-        }
-    }
+async fn save(
+    record: SyntheticRecord,
+    location: StorageLocation,
+    mode: SaveMode,
+) -> Result<RecordResponse, CommandError> {
+    // Own only the validated record and trusted path across await. Connection is
+    // opened, used, and dropped entirely on the blocking worker.
+    let record = tauri::async_runtime::spawn_blocking(move || location.save(record, mode))
+        .await
+        .map_err(|_| STORAGE_UNAVAILABLE)??;
+    Ok(RecordResponse {
+        record,
+        status: "saved",
+    })
+}
 
-    #[test]
-    fn rejects_invalid_ranges_and_controls() {
-        for text in [
-            "".to_owned(),
-            " \u{3000} ".to_owned(),
-            "a".repeat(257),
-            "a\n".to_owned(),
-            "a\0".to_owned(),
-            "a\u{7f}".to_owned(),
-        ] {
-            assert_eq!(
-                validate_body(&json!({"record": {"id": "synthetic-m0-001", "text": text}})),
-                Err(INVALID_RECORD)
-            );
-        }
-        assert_eq!(
-            validate_body(&json!({"record": {"id": "wrong-id", "text": "valid"}})),
-            Err(INVALID_RECORD)
-        );
-    }
+#[tauri::command]
+pub(crate) async fn m0_save_record(
+    request: Request<'_>,
+    storage: State<'_, StorageLocation>,
+) -> Result<RecordResponse, CommandError> {
+    save(
+        record_request(request)?,
+        storage.inner().clone(),
+        SaveMode::Commit,
+    )
+    .await
+}
 
-    #[test]
-    fn rejects_bad_shapes_without_reflecting_synthetic_secret() {
-        let sentinel = "synthetic-secret-never-reflect";
-        for body in [
-            Value::Null,
-            json!({}),
-            json!({"record": null}),
-            json!({"record": {"id": "synthetic-m0-001"}}),
-            json!({"record": {"id": 1, "text": "valid"}}),
-            json!({"record": {"id": "synthetic-m0-001", "text": 42}}),
-            json!({"record": {"id": "synthetic-m0-001", "text": [sentinel]}}),
-            json!({"record": {"id": "synthetic-m0-001", "text": "valid", sentinel: sentinel}}),
-            json!({"record": {"id": "synthetic-m0-001", "text": "valid"}, sentinel: sentinel}),
-        ] {
-            let error = validate_body(&body).unwrap_err();
-            assert_eq!(error, INVALID_RECORD);
-            assert!(!serde_json::to_string(&error).unwrap().contains(sentinel));
-        }
+#[tauri::command]
+pub(crate) async fn m0_simulate_save_failure(
+    request: Request<'_>,
+    storage: State<'_, StorageLocation>,
+) -> Result<RecordResponse, CommandError> {
+    save(
+        record_request(request)?,
+        storage.inner().clone(),
+        SaveMode::RollbackForVerification,
+    )
+    .await
+}
+
+#[tauri::command]
+pub(crate) async fn m0_load_record(
+    request: Request<'_>,
+    storage: State<'_, StorageLocation>,
+) -> Result<Option<SyntheticRecord>, CommandError> {
+    match request.body() {
+        InvokeBody::Json(serde_json::Value::Object(fields)) if fields.is_empty() => {}
+        _ => return Err(INVALID_RECORD),
     }
+    let location = storage.inner().clone();
+    tauri::async_runtime::spawn_blocking(move || location.load())
+        .await
+        .map_err(|_| STORAGE_UNAVAILABLE)?
 }
