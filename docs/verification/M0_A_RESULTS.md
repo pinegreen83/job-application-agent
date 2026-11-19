@@ -75,8 +75,8 @@ Windows/macOS CI도 [run #44284271888](https://github.com/pinegreen83/job-applic
 
 ## 남은 작업과 AC 판정
 
-**Windows/macOS 기본 창·종료·재실행 확인 완료 / M0 Gate 미통과.** npm·Cargo lockfile과 양쪽 OS의 기존 CI 검증 및 실기기 기본 창 실행을 확인했다. 개발 의존성 잔여 위험 판단과 사용자 리뷰가 남아 있어 PR의 Draft를 유지한다. 최초 통합 릴리스나 M0 전체 완료를 의미하지 않는다.
+**Windows/macOS 기본 창·종료·재실행 확인 완료 / PR #4 사용자 병합 완료 / M0 Gate 미통과.** npm·Cargo lockfile과 양쪽 OS의 CI 검증 및 실기기 기본 창 실행을 확인했고 사용자가 2026-11-19 main에 병합했다. 최초 통합 릴리스나 M0 전체 완료를 의미하지 않는다.
 
-이전 Windows 정책 차단 이후 후속 환경에서 실기기 실행에 성공했다. Mac도 사용자 확인으로 기본 창·종료·재실행을 검증했다. 개발 의존성 취약점의 수정판 확인·갱신 또는 잔여 위험에 대한 사용자 판단이 남아 있다. IPC·저장·Mock 및 M0 전체 Gate 검증은 별도다.
+이전 Windows 정책 차단 이후 후속 환경에서 실기기 실행에 성공했다. Mac도 사용자 확인으로 기본 창·종료·재실행을 검증했다. 당시 개발 의존성 검출은 2026-11-19 advisory 철회와 같은 lockfile의 전체 audit 0건을 재확인해 [검토 기록](M0_A_DEPENDENCY_REVIEW.md)에 갱신했다. IPC·저장·Mock 및 M0 전체 Gate 검증은 별도다.
 
 최초 PR 제출 시 CI는 미포함이었다. 후속 명시적 승인으로 네이티브 검사 workflow를 추가했으며, M0-E 전체·Release/설치본 게시와 사용자 merge는 별도 절차를 따른다.

@@ -8,19 +8,19 @@ Git, Node.js/npm, Xcode Command Line Tools와 Rust를 준비한다. Node 24.22.3
 
 ## 코드 받기
 
-현재 PR이 main에 merge되기 전에는 M0-A 브랜치를 받는다.
+M0-A PR #4는 main에 병합됐다. 새 검증은 main을 받는다. 이 문서 아래의 2026-11-18 실기기 기록은 당시 검증 commit을 보존한 이력이다.
 
 ```sh
-git clone --branch feat/3-m0-a-foundation https://github.com/pinegreen83/job-application-agent.git
+git clone https://github.com/pinegreen83/job-application-agent.git
 cd job-application-agent
 ```
 
-이미 checkout했다면 미커밋 변경 여부부터 확인하고 같은 브랜치에서 최신 변경을 받는다. 로컬 변경을 reset/force로 덮어쓰지 않는다.
+이미 checkout했다면 미커밋 변경 여부부터 확인하고 main에서 최신 변경을 받는다. 로컬 변경을 reset/force로 덮어쓰지 않는다.
 
 ```sh
 git status --short --branch
 git fetch origin
-git switch feat/3-m0-a-foundation
+git switch main
 git pull --ff-only
 ```
 

@@ -1,5 +1,14 @@
 # 변경 기록
 
+## 공통 setup 통합 검증 — 2026-11-19 (리뷰 전)
+- M0-A 사용자 병합 후 PR #6을 main 기준으로 조정하고 병합 완료 브랜치를 정리.
+- 새 기기와 같은 setup 명령을 Windows/macOS CI에 연결하고 Windows fresh clone에서 재검증.
+- GitHub의 picomatch advisory 철회를 확인하고 같은 lockfile의 전체 npm audit 0건을 기록. 패키지 버전 변경 없음.
+
+## 다른 기기 개발 설정 — 2026-11-18 (리뷰 전)
+- Issue #5: Node 버전 파일, 공통 doctor/setup, 기본 Chromium 스모크와 별도 Edge 명령, checkout·기기 전환·진행 상태 문서 추가.
+- Windows fresh clone의 공통 Node 24.22.3에서 setup/build 및 Chromium·Edge 각 2건 통과. 실제 다른 PC/macOS와 기존 native 제한은 미검증 유지.
+
 ## M0-A 개발 기반 — 2026-11-18 (리뷰 전)
 - Issue #3: Tauri 2/Rust 최소 실행부, React/TypeScript/Vite 합성 화면, npm lockfile·설정 검사·브라우저 통합 스모크 추가.
 - 개발 실행 절차와 OS별 검증 기록 추가. frontend 빌드와 스모크 2건 통과.
