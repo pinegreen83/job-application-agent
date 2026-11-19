@@ -16,7 +16,7 @@ cd job-application-agent
 git status --short --branch
 ```
 
-진행 중인 [Issue #17](https://github.com/pinegreen83/job-application-agent/issues/17)의 M0-E를 리뷰하려면 로컬 수정이 없는 상태에서 `git fetch origin` 후 `git switch --track origin/feat/17-privacy-ci`을 사용한다. 브랜치가 이미 로컬에 있으면 `git switch feat/17-privacy-ci` 후 `git pull --ff-only`한다. 병합 뒤에는 main을 사용한다. 미커밋 변경을 reset하거나 덮어쓰지 않는다.
+진행 중인 [Issue #19](https://github.com/pinegreen83/job-application-agent/issues/19)의 M0-F를 리뷰하려면 로컬 수정이 없는 상태에서 `git fetch origin` 후 `git switch --track origin/docs/19-m0-integration-gate`을 사용한다. 브랜치가 이미 로컬에 있으면 `git switch docs/19-m0-integration-gate` 후 `git pull --ff-only`한다. 병합 뒤에는 main을 사용한다. 미커밋 변경을 reset하거나 덮어쓰지 않는다.
 
 ## 도구 준비와 공통 실행
 
@@ -68,12 +68,12 @@ git push
 
 위 경로 자리표시는 실제 경로로 바꾼다. `git add .`로 로컬 개인 자료까지 무심코 올리지 않는다. push하지 않은 commit/미커밋 변경은 다른 기기에 전달되지 않는다. unfinished 코드는 해당 Issue 브랜치에 기록하고 main 직접 수정·자동 merge를 하지 않는다.
 
-다른 기기에서는 로컬 작업을 먼저 확인하고 같은 브랜치에서 최신 commit을 받는다. 아래는 Issue #17 작업 브랜치의 예시다. 후속 작업에서는 해당 Issue 브랜치 이름으로 바꾼다.
+다른 기기에서는 로컬 작업을 먼저 확인하고 같은 브랜치에서 최신 commit을 받는다. 아래는 Issue #19 작업 브랜치의 예시다. 후속 작업에서는 해당 Issue 브랜치 이름으로 바꾼다.
 
 ```sh
 git status --short --branch
 git fetch origin
-git switch feat/17-privacy-ci
+git switch docs/19-m0-integration-gate
 git pull --ff-only
 npm run setup
 ```
@@ -90,4 +90,4 @@ GitHub Public clone은 로그인 없이 가능하지만 push/Issue/PR 작업은 
 
 ## 검증 범위
 
-Windows의 공백 경로에 격리된 fresh checkout과 공통 Node로 setup/build 및 Chromium·Edge 각 2건을 검증했다. 현재 CI도 Windows/macOS에서 **같은 `npm run setup -- --tests` 명령**을 실행하고 Rust 검사·native build와 lockfile 무변경을 확인한다. 최신 CI 결과는 PR #6, 명령과 환경은 [검증 기록](verification/CROSS_DEVICE_RESULTS.md)을 참조한다. CI의 setup 성공은 모든 실제 기기의 SDK·권한·native 창 실행을 보증하지 않는다. M0-A Mac native 실행은 별도 사용자 확인으로 기록했다. 이전 advisory는 철회돼 현재 전체 audit은 0건이며 [의존성 검토](verification/M0_A_DEPENDENCY_REVIEW.md)에 이력을 남겼다. M0 전체 Gate 경계는 [M0-A 결과](verification/M0_A_RESULTS.md)를 따른다.
+Windows의 공백 경로에 격리된 fresh checkout과 공통 Node로 setup/build 및 Chromium·Edge 각 2건을 검증했다. 현재 CI도 Windows/macOS에서 **같은 `npm run setup -- --tests` 명령**을 실행하고 Rust 검사·native build와 lockfile 무변경을 확인한다. 최신 CI 결과는 PR #6, 명령과 환경은 [검증 기록](verification/CROSS_DEVICE_RESULTS.md)을 참조한다. CI의 setup 성공은 모든 실제 기기의 SDK·권한·native 창 실행을 보증하지 않는다. M0-A Mac native 실행은 별도 사용자 확인으로 기록했다. 이전 advisory는 철회돼 현재 전체 audit은 0건이며 [의존성 검토](verification/M0_A_DEPENDENCY_REVIEW.md)에 이력을 남겼다. M0 전체 Gate와 최종 Mac 일괄 검증은 [M0 통합 결과](verification/M0_RESULTS.md)를 따른다.
