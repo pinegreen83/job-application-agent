@@ -1,10 +1,14 @@
 # M0 준비 및 실행 계획
 
-- 작성: 2026-11-18 / 상태: **계획·M0 AC 사용자 승인 / M0-A 진행**
+- 작성: 2026-11-18 / 2026-11-19 현재: **계획·M0 AC 승인, M0 구현·Windows 통합·main 병합 완료 / Mac 실기기 보류**
 - 준비 Issue: [#1](https://github.com/pinegreen83/job-application-agent/issues/1)
 - 브랜치: `docs/1-m0-preparation`
 - 기준: [URS](../docs/URS.md), [PRD](../docs/PRD.md), [M0 AC 초안](../docs/MILESTONES.md), [검증 계획](../docs/TEST_PLAN.md)
 - 관련 명세: [SPEC-004](../specs/004-provider-draft/spec.md), [SPEC-006](../specs/006-ci-release/spec.md), [SPEC-011](../specs/011-development-workflow/spec.md)
+
+## 현재 상태와 원문 기록 구분
+
+PR #20까지 사용자 main 병합 완료(`6458192`). Windows 통합 및 양쪽 OS CI를 마쳤으나 Mac 실기기 통합은 현재 기기 사용 불가로 Issue #19에 보류해 전체 M0 Gate는 미통과다. [최신 상태](../docs/WORK_STATUS.md), [통합 결과](../docs/verification/M0_RESULTS.md), [M1 인계](../docs/M1_HANDOFF.md)를 따른다. **아래 준비 범위·설계 제안·미실행 표는 최초 준비 당시 기록**이다. 현재 구현/승인 상태로 읽지 않으며 승인 AC 자체는 변경하지 않는다.
 
 ## 후속 승인 기록
 

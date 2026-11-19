@@ -17,4 +17,4 @@
 
 ## macOS와 남은 Gate
 
-macOS scanner·기존 전체 CI는 연결 PR에서 최종 결과를 확인한다. Mac 실제 앱의 WKWebView 통합 검증은 사용자의 지시대로 일괄 진행할 미검증 항목이다. 기밀 스캐너 성공을 모든 개인정보 부재나 설치본 검증 완료로 주장하지 않는다. M0-F Gate와 사용자 PR 리뷰·main 병합이 남아 있다.
+후속 상태(2026-11-19): #18과 Windows 통합 보고 #20까지 사용자 main 병합 완료. [CI 44469567393](https://github.com/pinegreen83/job-application-agent/actions/runs/44469567393)은 macOS scanner를 포함해 양쪽 OS 전체 success다. Mac 실제 WKWebView 통합은 기기 사용 불가로 Issue #19에 보류하며 전체 Gate는 미통과다. [최신 결과](M0_RESULTS.md)를 따른다. 기밀 스캐너 성공을 모든 개인정보 부재나 설치본 검증 완료로 주장하지 않는다.

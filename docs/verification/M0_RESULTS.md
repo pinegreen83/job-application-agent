@@ -2,14 +2,15 @@
 
 관련: [Issue #19](https://github.com/pinegreen83/job-application-agent/issues/19), [승인된 M0 계획](../../plans/M0_PLAN.md), AC-M0-01~06, NFR-004/011, FR-006-04, AC-006-06. 기록일: 2026-11-19.
 
-**현재 M0 Gate: 미통과.** Windows 실제 통합과 양쪽 OS CI는 통과했다. Mac 실제 통합 확인 및 사용자 PR 리뷰·main 병합이 남았다. 과거 M0-A Mac 기본 창 성공을 이후 IPC·SQLite·Mock 성공으로 확대하지 않는다.
+**현재 M0 Gate: 미통과.** Windows 실제 통합과 양쪽 OS CI는 통과했고, PR #15/#16/#18/#20 사용자 리뷰·main 병합도 완료됐다. 남은 조건은 Mac 실제 통합 확인이다. 현재 기기를 사용할 수 없어 Issue #19에 보류하며 Windows 기준 후속 준비·개발은 진행 가능하다. 과거 M0-A Mac 기본 창 성공을 이후 IPC·SQLite·Mock 성공으로 확대하지 않는다.
 
 ## 검증 기준과 증거
 
 - 앱 코드/도구 기준: `e27a0d5d7e69645859d46d15432764da9dd9c27a` (M0-E까지 포함). 이 보고서 PR은 해당 source 위의 문서 변경이다.
 - [CI run 44468357728](https://github.com/pinegreen83/job-application-agent/actions/runs/44468357728): 위 head의 Windows/macOS 각각 success. scanner self-test, setup/TS·설정/frontend build, Chromium 48건, Rust fmt/check/clippy, Rust 16건, Tauri debug no-bundle build, lockfile 무변경 검사 통과.
 - [M0-B IPC](M0_B_RESULTS.md), [M0-C SQLite](M0_C_RESULTS.md), [M0-D Mock](M0_D_RESULTS.md), [M0-E 기밀 검사](M0_E_RESULTS.md)는 개별 구현 증거다. 아래는 같은 최종 source로 다시 확인한 통합 결과다.
-- PR #13의 SQLite가 기능 브랜치로 병합된 점을 발견했다. main 통합은 [#15](https://github.com/pinegreen83/job-application-agent/pull/15) → [#16](https://github.com/pinegreen83/job-application-agent/pull/16) → [#18](https://github.com/pinegreen83/job-application-agent/pull/18) → 이 보고서 순서로 사용자 검토한다. main ancestry를 확인하기 전 의존 브랜치를 지우지 않는다.
+- PR #13은 기능 브랜치로 병합됐지만 [#15](https://github.com/pinegreen83/job-application-agent/pull/15)가 main 통합을 완료했다. 이후 [#16](https://github.com/pinegreen83/job-application-agent/pull/16) → [#18](https://github.com/pinegreen83/job-application-agent/pull/18) → [#20](https://github.com/pinegreen83/job-application-agent/pull/20)도 사용자 병합 완료. main 기준은 `6458192a27b3234b7a0b0efac690fde96e16db56`다. 코드 보존 확인 후 이전 작업 브랜치를 정리했다.
+- 문서 head `5c06d15`의 [CI 44469567393](https://github.com/pinegreen83/job-application-agent/actions/runs/44469567393)도 양쪽 OS 전체 success. 실제 앱 검증 source e27a0d5와 위 main 사이 backend/frontend/scripts/manifest/lock/workflow diff는 없다. main commit에서 실기기 검사를 새로 실행했다고 주장하지 않는다.
 
 | AC | Windows 실제 실행 / 자동 검사 | macOS |
 |---|---|---|
@@ -36,7 +37,7 @@
 
 ## Mac 일괄 검증 절차
 
-대상 예상: 기존 사용자 기기 Apple M1 Pro/macOS Sequoia 15.8.1. 실제 실행 때 OS/CPU와 commit을 다시 기록한다. 아래는 **미실행 체크리스트**이며 체크 전에는 통과가 아니다.
+대상 예상: 기존 사용자 기기 Apple M1 Pro/macOS Sequoia 15.8.1. 현재 사용 불가로 보류 중이며 매 PR마다 재요청하지 않는다. 접근 가능해지면 실제 OS/CPU와 commit을 다시 기록한다. 아래는 **미실행 체크리스트**이며 체크 전에는 통과가 아니다. e27a0d5는 보존된 검증 기준 commit으로 과거 브랜치가 삭제돼도 fetch 후 접근할 수 있다. 이후 기능이 포함된 최신 버전을 검사할 때는 그 commit과 추가 검증 범위를 별도로 기록한다.
 
 ### 1. 같은 source 준비
 
@@ -79,7 +80,7 @@ Node 권장 24.22.3/Rust 1.100.0. 첫 설치/도구 준비는 [DEVELOPMENT](../D
 
 OS/CPU, `git rev-parse HEAD`, Node/Rust 버전, setup·scanner·Rust test·native build 성공 여부와 위 체크 결과를 알려준다. 예: `M1 Pro / 15.8.1 / e27a0d5 / Node ... / Rust ... / 자동검사 통과 / IPC 12/12 / 저장·강제 실패·재실행 복원 정상 / Mock 10/10·수동 취소 정상`.
 
-실패하면 해당 단계·오류 코드만 공유한다. 개인 파일/DB/API 키/원본 로그나 실제 토큰은 보내지 않는다. Mac 결과를 받은 뒤 이 문서와 PR을 갱신하고 main 통합 여부를 확인해 최종 Gate를 판단한다.
+실패하면 해당 단계·오류 코드만 공유한다. 개인 파일/DB/API 키/원본 로그나 실제 토큰은 보내지 않는다. Mac 결과를 받으면 Issue #19와 별도 결과 갱신 PR로 기록하고 최종 Gate를 판단한다. 이미 병합된 PR #20을 다시 미병합으로 취급하지 않는다.
 
 ## 완료 범위와 제한
 

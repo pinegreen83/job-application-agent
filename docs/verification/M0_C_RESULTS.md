@@ -37,4 +37,4 @@ DB 테스트는 매번 독립 TempDir를 사용한다. migration 반복/실패/�
 
 ## macOS와 남은 Gate
 
-실기기 **미검증·사용자 요청으로 M0 통합 검증에 이연**. 양쪽 OS CI 결과는 연결 PR을 따른다. CI 성공은 Mac 실제 WKWebView 저장·rollback·프로세스 재시작 복원의 증거가 아니다. 사용자 PR 리뷰·merge와 M0-D/E/F도 남아 있으며 현재 M0 전체 완료를 선언하지 않는다.
+실기기 **미검증·현재 기기 사용 불가로 Issue #19에 보류**. CI 성공은 Mac WKWebView 저장·rollback·프로세스 재시작 복원 증거가 아니다. 후속 상태(2026-11-19): #13의 기능 브랜치 병합 후 #15가 SQLite를 main에 통합했고 M0-D/E 및 Windows 통합 보고 #20도 사용자 병합 완료. [최신 통합 결과](M0_RESULTS.md)를 따르며 전체 Gate는 Mac 미검증으로 미통과다. 위 개별 검증 수치/환경은 M0-C 당시 기록이다.

@@ -6,11 +6,11 @@ Tauri 2/Rust 실행부와 React/TypeScript 합성 기본 화면을 사용한다.
 
 ## 공통 준비
 
-M0-D의 합성 Provider UI·오류·취소·저장본 보존 절차는 [PROVIDER_CONTRACT.md](PROVIDER_CONTRACT.md)를 따른다. 실제 계정/키 없이 실행한다. main 통합 및 병합 대기는 [WORK_STATUS.md](WORK_STATUS.md)에 기록한다.
+M0-D의 합성 Provider UI·오류·취소·저장본 보존 절차는 [PROVIDER_CONTRACT.md](PROVIDER_CONTRACT.md)를 따른다. 실제 계정/키 없이 실행한다. M0 PR #20까지 main 통합 완료. 현재 병합·검증 상태는 [WORK_STATUS.md](WORK_STATUS.md), 다음 대화는 [M1 인계](M1_HANDOFF.md)를 따른다.
 
 다른 기기에서 처음 받을 때는 [NEW_MACHINE.md](NEW_MACHINE.md)를 따른다. 공통 권장 Node 버전은 `.node-version`/`.nvmrc`에 기록하며 `npm run doctor`, `npm run setup`으로 환경 점검·의존성 설치·frontend build를 수행할 수 있다.
 
-1. 저장소를 checkout한다. Node.js 22.12 이상과 npm 10 이상을 준비한다. 새 환경에는 지원 중인 Node LTS 사용을 권장한다. 이번 Windows frontend 검증에는 기존 Node 25.7.0/npm 11.10.1을 사용했다.
+1. 저장소를 checkout한다. Node.js 22.12 이상과 npm 10 이상을 준비하며 공통 권장 버전은 24.22.3이다. 초기 Windows frontend 검증은 Node 25.7.0이었고 후속 통합 검증은 Node 24.22.3/npm 11.10.1을 사용했다.
 2. 프로젝트 루트에서 `npm ci`를 실행한다. npm 의존성은 정확한 직접 버전 및 `package-lock.json`으로 고정한다. 설치에는 npm registry 네트워크 접근이 필요하다.
 3. 네이티브 개발에는 아래 OS별 도구를 추가한다. Rust/Cargo 의존성 최초 다운로드도 네트워크가 필요하다. 앱의 외부 서비스 호출과 개발 도구 다운로드는 구분한다.
 
@@ -46,7 +46,7 @@ M0-D의 합성 Provider UI·오류·취소·저장본 보존 절차는 [PROVIDER
 | Rust 형식 | `cargo fmt --manifest-path backend/Cargo.toml -- --check` | Rust 도구 필요 |
 | Rust 컴파일 | `cargo check --manifest-path backend/Cargo.toml` | OS toolchain 필요 |
 | Rust 정적 검사 | `cargo clippy --manifest-path backend/Cargo.toml --all-targets -- -D warnings` | OS toolchain 필요 |
-| Rust 테스트 | `cargo test --manifest-path backend/Cargo.toml --locked` | M0-B 입력·실제 handler/ACL 테스트. 실제 WebView 실행 증거의 대체 아님 |
+| Rust 테스트 | `cargo test --manifest-path backend/Cargo.toml --locked` | 입력·SQLite·Mock/취소·handler/ACL 통합 16건 기준. 실제 WebView 실행 증거의 대체 아님 |
 
 브라우저 스모크는 개발 서버에서 desktop/narrow viewport를 확인한다. 외부 HTTP 요청을 차단·기록하고 합성 표시, 미분석 상태, 콘솔 오류와 수평 overflow를 검사한다. 스크린샷은 제외 경로 `test-results/`에 남긴다. 이는 WebView2/WKWebView 네이티브 창 검증이 아니다. CI와 기본 테스트는 고정 Chromium을 사용하고 기존 Edge 테스트도 별도 명령으로 유지한다.
 
@@ -62,12 +62,12 @@ M0-E는 전체 Git 이력·index·tracked 작업 파일의 기밀 검사와 공�
 
 ## 네이티브 스모크 기록 방법
 
-각 OS에서 commit/OS·CPU/Node·npm/Rust·Tauri 버전을 기록한다. API 키를 설정하지 않고 `npm ci` → `npm run check` → `npm run tauri dev`를 실행한다. 기본 창, 합성 표시, 미분석 상태와 미구현 안내가 보이는지 확인하고 종료/재실행한다. 명령·오류·화면 결과를 OS별로 기록한다. 저장·IPC·Mock은 M0-B~D에서 추가 검증한다.
+각 OS에서 commit/OS·CPU/Node·npm/Rust·Tauri 버전을 기록한다. 기본 창뿐 아니라 IPC·SQLite 저장/강제 실패·종료 후 복원·Mock/취소를 함께 확인하는 [M0 통합 체크리스트](verification/M0_RESULTS.md)를 따른다. Windows는 완료했고 Mac은 기기 사용 불가로 보류 중이다. 명령·오류·화면 결과를 OS별로 구분하며 CI 컴파일 성공으로 실기기를 대체하지 않는다.
 
 ## 설정과 보안 경계
 
 - `backend/tauri.conf.json`: 개발용 identifier `dev.jobapplicationagent.app`, 비출시 버전 `0.0.0`, installer bundling 비활성. 최종 제품 ID/릴리스 결정이 아니다.
-- M0-B는 `m0_validate_record` 하나를 AppManifest/ACL에 연결한다. 명시적으로 선택한 capability가 local main 창에 해당 명령과 M0-C 합성 저장·조회·강제 실패 명령만 허용한다. OS/셸/HTTP/file plugin·core:default 권한은 없다. capability/명령 추가 시 권한을 다시 검토한다.
+- AppManifest/ACL의 명시적 capability가 local main 창에 합성 검증·저장·조회·강제 실패와 Mock 시작·결과·취소의 7개 명령만 허용한다. OS/셸/HTTP/file plugin·core:default 권한은 없다. M1의 파일/네트워크 기능을 추가할 때 입력·목적지·권한 경계를 별도 설계하고 다시 검토한다.
 - production CSP는 Tauri 로컬 IPC만 허용하고, dev CSP는 추가로 Vite 로컬 서버·HMR loopback 연결과 개발용 inline script/style을 허용한다. 설정 schema 통과는 네이티브 런타임 보안 검증이 아니다.
 - Vite는 `127.0.0.1:1420`으로 제한하고 다른 포트로 자동 전환하지 않는다. 네트워크에 노출하지 말고 작업 후 종료한다.
 - 개발 아이콘은 저장소의 `scripts/generate-dev-icon.mjs`로 만든 고정 placeholder다. 재생성: `node scripts/generate-dev-icon.mjs`.

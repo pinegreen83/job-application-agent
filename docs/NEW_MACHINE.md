@@ -16,7 +16,15 @@ cd job-application-agent
 git status --short --branch
 ```
 
-진행 중인 [Issue #19](https://github.com/pinegreen83/job-application-agent/issues/19)의 M0-F를 리뷰하려면 로컬 수정이 없는 상태에서 `git fetch origin` 후 `git switch --track origin/docs/19-m0-integration-gate`을 사용한다. 브랜치가 이미 로컬에 있으면 `git switch docs/19-m0-integration-gate` 후 `git pull --ff-only`한다. 병합 뒤에는 main을 사용한다. 미커밋 변경을 reset하거나 덮어쓰지 않는다.
+M0 PR #20까지 main에 병합됐고 이전 작업 브랜치는 정리됐다. 기본 시작점은 main이다. 아래 명령은 로컬 변경을 먼저 확인하고 보존한 뒤 실행한다. 미커밋 변경을 reset하거나 덮어쓰지 않는다. 진행 중 PR은 [현재 상태](WORK_STATUS.md)와 실제 GitHub에서 확인한다.
+
+```sh
+git fetch origin --prune
+git switch main
+git pull --ff-only
+```
+
+새 대화에서 M1을 시작할 때는 [M1 인계·시작 문구](M1_HANDOFF.md)를 읽는다. 인계 문서가 아직 main에 병합되지 않았다면 [Issue #21](https://github.com/pinegreen83/job-application-agent/issues/21)의 연결 PR을 먼저 확인하며 자동 merge하지 않는다.
 
 ## 도구 준비와 공통 실행
 
@@ -68,12 +76,12 @@ git push
 
 위 경로 자리표시는 실제 경로로 바꾼다. `git add .`로 로컬 개인 자료까지 무심코 올리지 않는다. push하지 않은 commit/미커밋 변경은 다른 기기에 전달되지 않는다. unfinished 코드는 해당 Issue 브랜치에 기록하고 main 직접 수정·자동 merge를 하지 않는다.
 
-다른 기기에서는 로컬 작업을 먼저 확인하고 같은 브랜치에서 최신 commit을 받는다. 아래는 Issue #19 작업 브랜치의 예시다. 후속 작업에서는 해당 Issue 브랜치 이름으로 바꾼다.
+다른 기기에서는 로컬 작업을 먼저 확인하고 최신 main을 받는다. 진행 중인 작업을 이어갈 때만 해당 Issue의 실제로 존재하는 브랜치를 선택한다.
 
 ```sh
 git status --short --branch
 git fetch origin
-git switch docs/19-m0-integration-gate
+git switch main
 git pull --ff-only
 npm run setup
 ```
@@ -84,9 +92,9 @@ GitHub Public clone은 로그인 없이 가능하지만 push/Issue/PR 작업은 
 
 ## 다음 작업자가 읽을 문서
 
-[WORK_STATUS.md](WORK_STATUS.md) → [AGENTS.md](../AGENTS.md) → [M0 계획](../plans/M0_PLAN.md)과 관련 Spec/Issue를 읽는다. 저장소에 있는 작업 문서가 이관 기준이다. 현재 기기의 Codex 대화/로컬 설정 파일을 저장소에 업로드하지 않는다. 다른 기기에서 작업을 시작할 때 다음과 같이 지시할 수 있다.
+[AGENTS.md](../AGENTS.md) → [WORK_STATUS.md](WORK_STATUS.md) → [M1_HANDOFF.md](M1_HANDOFF.md) → [M1 계획 제안](../plans/M1_PLAN.md)과 관련 Spec/Issue를 읽는다. 저장소 문서가 이관 기준이다. 현재 기기의 Codex 대화/로컬 설정 파일을 저장소에 업로드하지 않는다. 새 대화에 붙여 넣을 구체적인 시작 문구는 M1_HANDOFF.md에 있다.
 
-> 이 저장소의 AGENTS.md, docs/WORK_STATUS.md, docs/NEW_MACHINE.md와 연결된 Issue/PR을 읽고 현재 브랜치·변경 상태를 먼저 확인해 주세요. 승인된 범위에서 남은 검증부터 이어가고, 사용자 자료·키는 업로드하지 않으며 main 직접 수정이나 자동 merge를 하지 마세요.
+> 이 저장소의 AGENTS.md, docs/WORK_STATUS.md, docs/M1_HANDOFF.md와 연결된 Issue/PR을 읽고 현재 브랜치·변경 상태를 먼저 확인해 주세요. Mac 실기기는 기기 사용 불가로 보류 중이며 Windows 기준 M1 계획·미정 결정 검토부터 시작합니다. 아직 승인되지 않은 M1 구현이나 실제 AI 호출을 하지 말고, 사용자 자료·키 업로드와 main 직접 수정·자동 merge도 하지 마세요.
 
 ## 검증 범위
 
