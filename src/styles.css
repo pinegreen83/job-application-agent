@@ -1,0 +1,29 @@
+:root { font-family: "Segoe UI", "Apple SD Gothic Neo", sans-serif; color: #24332e; background: #f5f7f4; font-synthesis: none; text-rendering: optimizeLegibility; line-height: 1.6; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+p, h1, h2, h3 { margin: 0; }
+.workspace { max-width: 1000px; padding: 36px 48px; margin: 0 auto; }
+.app-header { display: flex; gap: 14px; align-items: center; padding-bottom: 28px; border-bottom: 1px solid #dae2dc; }
+.app-mark { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; color: #fff; background: #285c45; font-size: 24px; font-weight: 700; }
+.eyebrow { color: #397054; font-size: 12px; font-weight: 700; letter-spacing: .09em; }
+.header-caption { font-size: 13px; color: #627067; }
+.badge { margin-left: auto; padding: 4px 12px; border: 1px solid #c8d5cc; border-radius: 20px; color: #42644f; font-size: 12px; font-weight: 600; }
+.intro { padding: 48px 0 36px; }
+h1 { margin: 10px 0 18px; font-size: clamp(28px, 4vw, 40px); line-height: 1.35; letter-spacing: -.04em; }
+.description { color: #5b6960; font-size: 15px; }
+.section-heading, .card-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.section-heading { margin-bottom: 14px; }
+h2 { font-size: 16px; }
+.sample-card { background: #fff; border: 1px solid #d8e1da; border-radius: 16px; padding: 26px; }
+.company { color: #4c6254; font-size: 13px; font-weight: 600; }
+.sample-label { background: #edf3ec; color: #42633e; border-radius: 6px; padding: 3px 9px; font-size: 12px; white-space: nowrap; }
+h3 { font-size: 22px; letter-spacing: -.03em; margin: 10px 0 7px; }
+.muted { color: #627067; font-size: 14px; }
+.sample-details { display: flex; flex-wrap: wrap; gap: 18px 40px; padding-top: 20px; margin: 22px 0 0; border-top: 1px solid #e6ebe6; font-size: 13px; }
+.sample-details dt { color: #627067; }
+.sample-details dd { margin: 4px 0 0; overflow-wrap: anywhere; }
+.notice { margin-top: 22px; background: #eaf0eb; border-radius: 12px; padding: 20px 24px; }
+.notice h2 { font-size: 14px; margin-bottom: 6px; }
+.notice p { font-size: 13px; color: #4d6356; }
+footer { padding: 26px 0 12px; color: #627067; font-size: 12px; }
+@media (max-width: 600px) { .workspace { padding: 24px 20px; } .intro { padding-top: 34px; } .sample-card { padding: 20px; } .notice { padding: 18px 20px; } .eyebrow { font-size: 10px; } .app-header { gap: 10px; } }

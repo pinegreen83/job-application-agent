@@ -3,6 +3,9 @@ node_modules/
 dist/
 target/
 coverage/
+test-results/
+playwright-report/
+/src-tauri/gen/
 *.tsbuildinfo
 
 # Local environment, credentials and signing material

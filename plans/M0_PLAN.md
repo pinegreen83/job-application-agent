@@ -1,10 +1,14 @@
 # M0 준비 및 실행 계획
 
-- 작성: 2026-11-18 / 상태: **사용자 검토 대기**
+- 작성: 2026-11-18 / 상태: **계획·M0 AC 사용자 승인 / M0-A 진행**
 - 준비 Issue: [#1](https://github.com/pinegreen83/job-application-agent/issues/1)
 - 브랜치: `docs/1-m0-preparation`
 - 기준: [URS](../docs/URS.md), [PRD](../docs/PRD.md), [M0 AC 초안](../docs/MILESTONES.md), [검증 계획](../docs/TEST_PLAN.md)
 - 관련 명세: [SPEC-004](../specs/004-provider-draft/spec.md), [SPEC-006](../specs/006-ci-release/spec.md), [SPEC-011](../specs/011-development-workflow/spec.md)
+
+## 후속 승인 기록
+
+2026-11-18 사용자가 [PR #2](https://github.com/pinegreen83/job-application-agent/pull/2)의 계획·AC 승인 체크를 완료하고 직접 merge했다. 이후 다음 작업 진행을 지시해 [M0-A Issue #3](https://github.com/pinegreen83/job-application-agent/issues/3)에 착수한다. 아래 준비 당시 문구는 최초 제안 이력이다. 계획·AC 승인은 구현 검증 통과나 M0 전체 Gate 통과가 아니다. M0-B 이후 설계 유보 사항은 계속 각 작업 전에 검토한다.
 
 ## 승인 범위
 

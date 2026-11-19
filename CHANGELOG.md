@@ -1,5 +1,10 @@
 # 변경 기록
 
+## M0-A 개발 기반 — 2026-11-18 (리뷰 전)
+- Issue #3: Tauri 2/Rust 최소 실행부, React/TypeScript/Vite 합성 화면, npm lockfile·설정 검사·브라우저 통합 스모크 추가.
+- 개발 실행 절차와 OS별 검증 기록 추가. frontend 빌드와 스모크 2건 통과.
+- Rust/MSVC 미설치·CLI 앱 제어 차단으로 native/Cargo.lock 미검증, macOS 미검증, 개발 의존성 high 5건 유지. AC-M0-01 전체와 M0 Gate는 미충족.
+
 ## 저장소 착수 준비 — 2026-11-18 (v0.2.1 이후, 문서 변경)
 - Public 저장소에 기존 명세를 초기 등록하고 [M0 준비 Issue #1](https://github.com/pinegreen83/job-application-agent/issues/1)을 생성.
 - [M0 계획](plans/M0_PLAN.md), Issue/PR 템플릿 및 `.gitignore` 마련. 상세 Spec·M0 AC는 사용자 검토 대기.
