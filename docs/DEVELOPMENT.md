@@ -2,7 +2,7 @@
 
 관련: [Issue #3](https://github.com/pinegreen83/job-application-agent/issues/3), [M0 계획](../plans/M0_PLAN.md), FR-006-01 / AC-006-01 / AC-M0-01, NFR-004/011.
 
-Tauri 2/Rust 실행부와 React/TypeScript 합성 기본 화면을 사용한다. 고정 합성 공고 1건은 실행 확인용이며 실제 분석·추천 결과가 아니다. M0-B는 승인된 합성 입력 검증 명령을 추가한다. 파일/DB 저장과 Provider는 아직 없으며 외부 모델 계정·API 키·개인 문서는 필요하지 않다. 계약·권한·OS별 스모크는 [M0_B_IPC.md](M0_B_IPC.md)를 따른다.
+Tauri 2/Rust 실행부와 React/TypeScript 합성 기본 화면을 사용한다. 고정 합성 공고 1건은 실행 확인용이며 실제 분석·추천 결과가 아니다. M0-B는 승인된 합성 입력 검증 명령을 추가한다. M0-C에서는 합성 SQLite 저장·복원도 추가한다. 실제 제품 자료 저장과 Provider는 아직 없으며 외부 모델 계정·API 키·개인 문서는 필요하지 않다. 계약·권한은 [M0_B_IPC.md](M0_B_IPC.md), 저장·복원은 [M0_C_SQLITE.md](M0_C_SQLITE.md)를 따른다. Mac 실기기는 사용자 지시에 따라 M0 통합 단계에서 일괄 검증하며 현재는 미검증이다.
 
 ## 공통 준비
 
@@ -52,7 +52,7 @@ Tauri 2/Rust 실행부와 React/TypeScript 합성 기본 화면을 사용한다.
 
 ## PR 네이티브 CI
 
-사용자가 추가 승인한 `.github/workflows/m0-a-native.yml`은 main 대상 PR에서 Windows/macOS 검증용 러너로 Node 24.22.3과 Rust 1.100.0을 준비한다. 새 기기와 동일한 `npm run setup -- --tests`로 npm lock 설치·TS/설정/build·Chromium 스모크를 실행하고, Rust fmt/check/clippy/test·Tauri debug 비번들 build·lockfile 무변경도 검사한다. Action은 commit SHA로 고정하며 읽기 권한만 사용하고 인증정보·개인 자료·설치본·Release를 게시하지 않는다.
+사용자가 추가 승인한 `.github/workflows/m0-a-native.yml`은 main 및 feat/** 대상 PR에서 Windows/macOS 검증용 러너로 Node 24.22.3과 Rust 1.100.0을 준비한다. 새 기기와 동일한 `npm run setup -- --tests`로 npm lock 설치·TS/설정/build·Chromium 스모크를 실행하고, Rust fmt/check/clippy/test·Tauri debug 비번들 build·lockfile 무변경도 검사한다. Action은 commit SHA로 고정하며 읽기 권한만 사용하고 인증정보·개인 자료·설치본·Release를 게시하지 않는다.
 
 러너는 검증 환경이며 최초 지원 CPU/최소 OS/서명 결정이 아니다. CI 컴파일과 실제 기기에서의 기본 창·IPC·저장 스모크를 구분한다. 이 검사는 M0-E의 전체 기밀 스캐너/배포 CI나 M0-F의 OS별 Gate를 완료한 것이 아니다. 기반 검증은 PR #4, 공통 setup 통합의 최신 결과는 PR #6에서 확인한다.
 
@@ -63,7 +63,7 @@ Tauri 2/Rust 실행부와 React/TypeScript 합성 기본 화면을 사용한다.
 ## 설정과 보안 경계
 
 - `backend/tauri.conf.json`: 개발용 identifier `dev.jobapplicationagent.app`, 비출시 버전 `0.0.0`, installer bundling 비활성. 최종 제품 ID/릴리스 결정이 아니다.
-- M0-B는 `m0_validate_record` 하나를 AppManifest/ACL에 연결한다. 명시적으로 선택한 capability가 local main 창에 해당 명령만 허용한다. OS/셸/HTTP/file plugin·core:default 권한은 없다. capability/명령 추가 시 권한을 다시 검토한다.
+- M0-B는 `m0_validate_record` 하나를 AppManifest/ACL에 연결한다. 명시적으로 선택한 capability가 local main 창에 해당 명령과 M0-C 합성 저장·조회·강제 실패 명령만 허용한다. OS/셸/HTTP/file plugin·core:default 권한은 없다. capability/명령 추가 시 권한을 다시 검토한다.
 - production CSP는 Tauri 로컬 IPC만 허용하고, dev CSP는 추가로 Vite 로컬 서버·HMR loopback 연결과 개발용 inline script/style을 허용한다. 설정 schema 통과는 네이티브 런타임 보안 검증이 아니다.
 - Vite는 `127.0.0.1:1420`으로 제한하고 다른 포트로 자동 전환하지 않는다. 네트워크에 노출하지 말고 작업 후 종료한다.
 - 개발 아이콘은 저장소의 `scripts/generate-dev-icon.mjs`로 만든 고정 placeholder다. 재생성: `node scripts/generate-dev-icon.mjs`.

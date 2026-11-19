@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-m0-simulate-save-failure"
+description = "Enables the m0_simulate_save_failure command without any pre-configured scope."
+commands.allow = ["m0_simulate_save_failure"]
+
+[[permission]]
+identifier = "deny-m0-simulate-save-failure"
+description = "Denies the m0_simulate_save_failure command without any pre-configured scope."
+commands.deny = ["m0_simulate_save_failure"]

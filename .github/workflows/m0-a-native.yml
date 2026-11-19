@@ -2,7 +2,7 @@ name: Development setup and native checks
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, 'feat/**']
 
 permissions:
   contents: read

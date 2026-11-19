@@ -6,8 +6,13 @@ fn main() {
         println!("cargo:rustc-link-arg=/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'");
     }
     // Declaring the app manifest makes application commands subject to ACL too.
-    let mut attributes = tauri_build::Attributes::new()
-        .app_manifest(tauri_build::AppManifest::new().commands(&["m0_validate_record"]));
+    let mut attributes =
+        tauri_build::Attributes::new().app_manifest(tauri_build::AppManifest::new().commands(&[
+            "m0_validate_record",
+            "m0_save_record",
+            "m0_load_record",
+            "m0_simulate_save_failure",
+        ]));
     if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc") {
         // The linker embeds the same Common Controls dependency in every
         // executable. Do not embed a second resource manifest in the app binary.
