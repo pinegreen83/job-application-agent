@@ -58,6 +58,8 @@ M0-B는 승인된 합성 입력 검증 명령과 main 창 전용 최소 권한�
 
 M0-D는 [Provider Mock 계약](docs/PROVIDER_CONTRACT.md)의 4종 합성 결과·오류·실제 비동기 취소·기존 저장본 보존을 검증한다. 실제 모델 호출·AI 품질 검증·초안 자동 저장은 하지 않는다. 최신 구현과 main 통합 상태는 [작업 상태](docs/WORK_STATUS.md)를 확인한다.
 
+공개 전에는 검토한 파일을 명시적으로 stage하고 `npm run check:privacy -- --self-test`로 [기밀 검사·공개 경계](docs/SECURITY_CHECKS.md)를 확인한다. 실제 비밀/문서를 검사 fixture로 쓰거나 검출 원문을 업로드하지 않는다.
+
 프로필과 메일 샘플은 퍼블릭 저장소에 넣지 말고 개인정보가 제거된 합성 Fixtures만 사용한다. 초기 대상 OS/배포 조건은 `docs/MILESTONES.md` 및 `specs/006-ci-release/spec.md`를 따른다.
 
 저장소 준비 [Issue #1](https://github.com/pinegreen83/job-application-agent/issues/1)의 [M0 실행 계획](plans/M0_PLAN.md)과 M0 AC는 PR #2에서 사용자 승인·merge됐다. [M0-A Issue #3](https://github.com/pinegreen83/job-application-agent/issues/3)의 결과·제한은 [검증 기록](docs/verification/M0_A_RESULTS.md)에 남긴다. 후속 상세 Spec의 일괄 승인이나 M0 Gate 통과를 의미하지 않는다.

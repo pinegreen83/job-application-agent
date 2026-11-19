@@ -54,9 +54,11 @@ M0-D의 합성 Provider UI·오류·취소·저장본 보존 절차는 [PROVIDER
 
 ## PR 네이티브 CI
 
+M0-E는 전체 Git 이력·index·tracked 작업 파일의 기밀 검사와 공개 파일 경계 self-test를 추가한다. 로컬 명령·고정 도구·검사 한계는 [SECURITY_CHECKS.md](SECURITY_CHECKS.md)를 따른다. scanner 보고서/검출값을 artifact나 로그로 업로드하지 않는다.
+
 사용자가 추가 승인한 `.github/workflows/m0-a-native.yml`은 main 및 feat/** 대상 PR에서 Windows/macOS 검증용 러너로 Node 24.22.3과 Rust 1.100.0을 준비한다. 새 기기와 동일한 `npm run setup -- --tests`로 npm lock 설치·TS/설정/build·Chromium 스모크를 실행하고, Rust fmt/check/clippy/test·Tauri debug 비번들 build·lockfile 무변경도 검사한다. Action은 commit SHA로 고정하며 읽기 권한만 사용하고 인증정보·개인 자료·설치본·Release를 게시하지 않는다.
 
-러너는 검증 환경이며 최초 지원 CPU/최소 OS/서명 결정이 아니다. CI 컴파일과 실제 기기에서의 기본 창·IPC·저장 스모크를 구분한다. 이 검사는 M0-E의 전체 기밀 스캐너/배포 CI나 M0-F의 OS별 Gate를 완료한 것이 아니다. 기반 검증은 PR #4, 공통 setup 통합의 최신 결과는 PR #6에서 확인한다.
+러너는 검증 환경이며 최초 지원 CPU/최소 OS/서명 결정이 아니다. CI 컴파일·기밀 검사와 실제 기기의 기본 창·IPC·저장·Mock 통합 스모크를 구분한다. M0-E 검사 결과는 해당 PR을 따르며 배포 CI·설치본이나 M0-F OS Gate 완료를 뜻하지 않는다. 과거 기반 검증은 PR #4/#6 기록을 참조한다.
 
 ## 네이티브 스모크 기록 방법
 
