@@ -2,6 +2,8 @@
 
 각 `specs/**/spec.md`의 AC가 테스트 기준이다. 실제 구현 전에는 **테스트 케이스 정의**와 사용자 승인부터 수행한다.
 
+2026-11-19 M0 실제 결과는 [통합 결과](verification/M0_RESULTS.md)와 [추적표](REQUIREMENTS_TRACEABILITY.md)에 연결했다. M1의 PR별 후보·입력·기대 결과·미정 결정은 [M1 계획 제안](../plans/M1_PLAN.md)에 있으며 아직 승인/실행 결과가 아니다. 다음 대화는 [인계 문서](M1_HANDOFF.md)에서 시작한다.
+
 ## 테스트 계층
 - **Unit (Rust):** EML/MIME/인코딩 파싱, 다중 공고 추출, canonical URL/중복 판정, 자격요건 표현, 문서 인덱싱/검색, 상태 전이, 승인 버전 확인, 알림 대상 집계.
 - **Unit (TypeScript):** 공고 목록 정렬, 화면 상태, 리뷰 Diff 표시, 문항별 복사 형식, 오류·불명 상태 표시.

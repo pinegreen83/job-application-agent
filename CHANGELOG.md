@@ -1,5 +1,11 @@
 # 변경 기록
 
+## M0 병합 정리·M1 새 대화 인계 — 2026-11-19
+- PR #15/#16/#18/#20의 main 통합과 이전 작업 브랜치 정리를 상태·기기 전환·추적표·검증 보고서에 반영.
+- Windows 실제 통합·양쪽 OS CI 완료와 Mac 기기 사용 불가/실기기 보류를 구분. Issue #19와 전체 M0 Gate 미통과 유지.
+- Issue #21: M1 인계·복사용 시작 문구, 승인 전 계획·결정/PR/테스트 제안 추가. M1 제품 기능·공급자·schema 구현/승인이나 실제 AI 호출 없음.
+- 아래 항목은 각 작업 당시의 기록이다. 현재 상태는 docs/WORK_STATUS.md와 docs/verification/M0_RESULTS.md를 따른다.
+
 ## 공통 setup 통합 검증 — 2026-11-19 (리뷰 전)
 - M0-A 사용자 병합 후 PR #6을 main 기준으로 조정하고 병합 완료 브랜치를 정리.
 - 새 기기와 같은 setup 명령을 Windows/macOS CI에 연결하고 Windows fresh clone에서 재검증.

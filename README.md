@@ -1,12 +1,14 @@
 # Job Application Agent — Spec-Driven Development
 
-**버전:** 0.2.1 · **상태:** 최초 통합 프로토타입 범위 확정 / 상세 명세 검증 단계 · **2026-11-18**
+**요구사항 버전:** 0.2.1 · **진행:** M0 구현·Windows 통합 완료 / Mac 실기기 통합 보류 / M1 설계 전 · **2026-11-19**
 
 개인 취업 지원자를 위한 **로컬 우선 채용공고 분석 및 지원 관리 데스크톱 앱**. 하루에도 여러 통씩 쌓이는 추천 메일에서 개별 공고를 추출하고 중복을 정리한 뒤, 상세 JD와 실제 경험을 비교해 검토 우선순위를 제시한다. 검토한 공고에 대해 간편 지원용 이력서 수정 또는 기업 자체 지원서 작성 보조를 제공하고, **사용자가 외부 사이트에서 직접 제출**한 결과를 관리한다.
 
 ## 요구사항부터 시작하기
 
 **다른 기기에서 이어가기:** [새 기기 설정](docs/NEW_MACHINE.md)과 [현재 작업 상태](docs/WORK_STATUS.md)를 확인한다. main 또는 현재 Issue의 작업 브랜치를 받아 루트에서 `npm run setup`을 실행한다.
+
+**새 대화에서 M1 시작:** [M1 인계·복사용 시작 문구](docs/M1_HANDOFF.md)와 [M1 계획 제안](plans/M1_PLAN.md)을 먼저 읽는다. 로컬/원격 상태 확인 후 현재 작업에 필요한 결정부터 검토한다. M1 계획·제품 schema·첫 Provider는 아직 승인 전이다.
 1. `docs/URS.md` — 사용자가 직접 제시한 필요와 미확정 요구사항 (제품 명세의 상위 기준)
 2. `docs/PRD.md` — 최초 통합 프로토타입 범위와 제품 흐름
 3. `specs/**/spec.md` — 기능별 FR·AC 및 테스트 가능한 완료 기준
@@ -50,13 +52,13 @@ package.json    루트 공통 npm 명령과 단일 package-lock.json
 - 이전 버전의 '외부 채용 사이트 자동 제출' 요구사항은 **폐기**되었다.
 
 ## 현 상태와 개발 시작
-이 저장소에는 명세와 M0-A 개발용 실행 기반이 있다. 완성된 앱이나 CI 파이프라인은 아니다. 후속 개발도 `CODEX_START.md`와 승인된 기능별 명세를 먼저 확인한다.
+M0-A~E 구현과 Windows 통합 보고 PR #20까지 main에 병합됐다(`6458192`). Tauri 2·React/TS, 최소 IPC, 합성 SQLite 저장/복원·실패 보존, Provider Mock·실제 취소와 양쪽 OS PR CI/기밀 검사가 있다. M1의 실제 메일/JD·Provider·제품 데이터 기능은 미구현이다.
 
-M0-A에서는 키 없이 실행하는 합성 기본 화면과 Tauri 실행부를 추가한다. 개발 명령과 OS별 준비·검증 한계는 [개발 실행 문서](docs/DEVELOPMENT.md)를 따른다. 빠른 브라우저 확인은 `npm ci` → `npm run dev`이며, 실제 Tauri 실행에는 Rust와 OS별 빌드 도구가 필요하다. Windows/macOS 실기기에서 M0-A 기본 창·종료·재실행을 확인했다. 검증 근거와 의존성 재검사 이력은 [검증 기록](docs/verification/M0_A_RESULTS.md)을 참조한다. M0 전체 Gate는 아직 미완료다.
+개발 명령·OS별 도구는 [개발 실행 문서](docs/DEVELOPMENT.md)를 따른다. 빠른 브라우저 확인은 `npm ci` → `npm run dev`이며 실제 Tauri 실행에는 Rust·OS 도구가 필요하다. Windows 실제 IPC12/12·SQLite 저장/실패 보존/재실행 복원·Mock10/10/수동 취소와 양쪽 OS CI Rust16·Chromium48·native build는 통과했다. 정확한 head/run은 [통합 결과](docs/verification/M0_RESULTS.md)를 따른다. Mac 실기기 통합은 현재 기기 사용 불가로 Issue #19에 보류하며 **M0 전체 Gate는 미통과**다. Windows 기준 후속 준비·개발은 가능하다.
 
-M0-B는 승인된 합성 입력 검증 명령과 main 창 전용 최소 권한을 추가한다. [IPC 계약](docs/M0_B_IPC.md)을 참조한다. M0-C는 [합성 SQLite 저장·복원](docs/M0_C_SQLITE.md)을 추가한다. 실제 제품 데이터 저장·Provider 연결은 후속 단계다. 브라우저에서는 native 호출을 실행하지 않는다. Mac 실기기 확인은 사용자 요청으로 M0 통합 때 진행하며 현재는 미검증이다.
+구현 범위는 [IPC 계약](docs/M0_B_IPC.md), [합성 SQLite](docs/M0_C_SQLITE.md), [Provider Mock 계약](docs/PROVIDER_CONTRACT.md)에 기록했다. 브라우저 테스트는 native 실행을 시뮬레이션하며 실제 OS 증거와 구분한다.
 
-M0-D는 [Provider Mock 계약](docs/PROVIDER_CONTRACT.md)의 4종 합성 결과·오류·실제 비동기 취소·기존 저장본 보존을 검증한다. 실제 모델 호출·AI 품질 검증·초안 자동 저장은 하지 않는다. 최신 구현과 main 통합 상태는 [작업 상태](docs/WORK_STATUS.md)를 확인한다.
+`CODEX_START.md`는 완료된 초기 준비의 원문 기록이다. 후속 작업은 [AGENTS](AGENTS.md)와 [작업 상태](docs/WORK_STATUS.md), 관련 Spec/Issue를 기준으로 시작한다. 과거 검증 문서는 당시 결과이며 최신 병합/잔여 조건은 작업 상태·통합 결과를 따른다.
 
 공개 전에는 검토한 파일을 명시적으로 stage하고 `npm run check:privacy -- --self-test`로 [기밀 검사·공개 경계](docs/SECURITY_CHECKS.md)를 확인한다. 실제 비밀/문서를 검사 fixture로 쓰거나 검출 원문을 업로드하지 않는다.
 

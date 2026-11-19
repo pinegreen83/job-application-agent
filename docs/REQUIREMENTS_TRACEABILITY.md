@@ -1,6 +1,6 @@
 # 요구사항 추적표 — v0.2
 
-**상태:** 연결 제안. ID별 테스트/Issue/PR 연결은 실제 개발 시 갱신한다.
+**상태:** 전체 제품 연결은 제안. M0 구현·검증 추적은 아래 실제 기록으로 갱신했다(2026-11-19). M1 이후는 해당 범위 승인·구현 시 연결한다.
 
 | 사용자 요구사항 | 기능 명세 | 마일스톤 |
 |---|---|---|
@@ -37,15 +37,28 @@
 - UR-010/012: FR-004-04/05 → AC-004-08 (원본 보존, 독립 리뷰 대상 revision).
 - UR-012/013: FR-005-03 → AC-005-02/07 (본문·첨부 교체 시 재승인).
 - UR-011: FR-009-04 → AC-009-05~07 (제약·금지 정보·질문 불일치 검사).
-- M0: `MILESTONES.md`의 AC-M0-01~06 초안을 계획 승인 시 확정한다.
+- M0: `MILESTONES.md`의 AC-M0-01~06은 PR #2에서 계획과 함께 승인됐다. M0 전체 Gate는 Mac 실기기 통합 미검증으로 미통과다.
 
 이 표는 전체 FR/AC 매핑 완료를 의미하지 않는다. 각 Issue 착수 시 그 범위의 FR마다 검증 AC/테스트를 연결하고, 미정 기대 결과는 먼저 확정한다. 전체 프로토타입 범위는 확정됐지만 상세 Spec과 새 AC는 검토 상태를 유지한다.
 
-## M0 준비 추적
+## M0 실제 구현·검증 추적
 
-[준비 Issue #1](https://github.com/pinegreen83/job-application-agent/issues/1) → [M0 계획](../plans/M0_PLAN.md): NFR-001/003/004/006/011, DEV-001~008, FR-004-01/02/07, FR-006-01/02/04/06, SPEC-011과 AC-M0-01~06의 작업·검증 경계를 연결한다. 구현 테스트 및 OS 검증은 아직 미실행이며 상세 AC는 검토 대기다. 리뷰 PR과 준비 검증 결과는 Issue의 연결 PR에서 확인한다.
+[준비 Issue #1](https://github.com/pinegreen83/job-application-agent/issues/1) → [PR #2](https://github.com/pinegreen83/job-application-agent/pull/2)에서 [M0 계획](../plans/M0_PLAN.md)·AC를 사용자 승인했다. DEV-002~006/008의 Issue→브랜치→PR→사용자 병합·CI 기록은 다음과 같다. 공개 Release/DEV-007은 이번에 수행하지 않았다.
 
-후속: PR #2에서 M0 계획·AC 승인 후 [M0-A Issue #3](https://github.com/pinegreen83/job-application-agent/issues/3) → [개발 절차](DEVELOPMENT.md) → [검증 기록](verification/M0_A_RESULTS.md)으로 FR-006-01 / AC-006-01 / AC-M0-01을 연결한다. frontend 검사만 통과했으며 native/OS 조건과 AC 전체는 미충족이다.
+| AC / 요구 | Issue / 사용자 병합 PR | 수용 검사와 결과 |
+|---|---|---|
+| AC-M0-01; NFR-004/011, FR-006-01, AC-006-01 | [#3](https://github.com/pinegreen83/job-application-agent/issues/3) / [#4](https://github.com/pinegreen83/job-application-agent/pull/4) | [M0-A](verification/M0_A_RESULTS.md): 기본 합성 창 양쪽 OS 확인. 후속 통합 source의 Mac은 미검증 |
+| AC-M0-02; NFR-011, 아키텍처 경계 | [#10](https://github.com/pinegreen83/job-application-agent/issues/10) / [#11](https://github.com/pinegreen83/job-application-agent/pull/11) | [M0-B](verification/M0_B_RESULTS.md), [통합](verification/M0_RESULTS.md): Windows 실제 경계12/12, 정상·빈 입력, handler/ACL 테스트 |
+| AC-M0-03; NFR-001/011 | [#12](https://github.com/pinegreen83/job-application-agent/issues/12) / [#13](https://github.com/pinegreen83/job-application-agent/pull/13) → [#15](https://github.com/pinegreen83/job-application-agent/pull/15) | [M0-C](verification/M0_C_RESULTS.md), [통합](verification/M0_RESULTS.md): Windows 합성 저장/강제 실패·원본 보존/프로세스 종료 후 복원.#15로 main 반영 |
+| AC-M0-04; NFR-003/006/011, FR-004-01/02/07, AC-004-04/06/07 Mock 부분 | [#14](https://github.com/pinegreen83/job-application-agent/issues/14) / [#16](https://github.com/pinegreen83/job-application-agent/pull/16) | [M0-D](verification/M0_D_RESULTS.md): Windows native10/10·수동 취소·저장본 보존. 실제 Provider/AI 품질/초안 저장 완료 아님 |
+| AC-M0-05; NFR-004/011, FR-006-02/06, AC-006-02/04 | [#17](https://github.com/pinegreen83/job-application-agent/issues/17) / [#18](https://github.com/pinegreen83/job-application-agent/pull/18) | [M0-E](verification/M0_E_RESULTS.md): 고정 scanner 양성/음성·redaction·경계. [CI 44469567393](https://github.com/pinegreen83/job-application-agent/actions/runs/44469567393) Windows/macOS Rust16·Chromium48·정적·기밀·native build 통과 |
+| AC-M0-06; NFR-004, FR-006-04, AC-006-06 | [#19](https://github.com/pinegreen83/job-application-agent/issues/19) / [#20](https://github.com/pinegreen83/job-application-agent/pull/20) | [M0 통합 결과](verification/M0_RESULTS.md): 보고서 main 반영, Windows 통합 완료, Mac 실기기 보류 → 전체 Gate 미통과 |
+
+환경 재현·폴더 분리 추적: [#5](https://github.com/pinegreen83/job-application-agent/issues/5)/[#6](https://github.com/pinegreen83/job-application-agent/pull/6), [#8](https://github.com/pinegreen83/job-application-agent/issues/8)/[#9](https://github.com/pinegreen83/job-application-agent/pull/9).[기기 전환 결과](verification/CROSS_DEVICE_RESULTS.md), [현재 상태](WORK_STATUS.md)를 따른다. M0 결과의 head/run·실기기와 renderer 증거를 혼동하지 않는다.
+
+## M1 준비 추적 — 승인 전
+
+[문서 인계 Issue #21](https://github.com/pinegreen83/job-application-agent/issues/21) → [인계](M1_HANDOFF.md) → [계획 제안](../plans/M1_PLAN.md)에 UR-001~004, NFR-001/002/003/004/006/010/011, SPEC-001/002/004 M1 부분의 결정·PR 분할·AC 테스트를 제안했다. M1 구현 Issue/PR·수용 테스트 결과·릴리스 태그는 아직 없다. 이 준비 기록을 기능 승인이나 구현 완료로 취급하지 않는다.
 
 ## 이전 v0.1에서 의도적으로 변경한 내용
 1. **핵심 우선순위:** RAG 작성 자동화 → 대량 공고의 중복 관리와 개인화 적합성 평가.
